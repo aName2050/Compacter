@@ -1,0 +1,13 @@
+body {
+    background-color: whitesmoke;
+}
+
+footer {
+    height: 40dvh;
+}
+
+.search-box {
+    border-radius: 10px;
+    border-color: #212529;
+    padding: 5px;
+}

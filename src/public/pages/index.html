@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="/public/styles/home/bootstrap.min.css" rel="stylesheet" />
+        <link href="/public/styles/home/style.css" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+        />
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        ></script>
+        <link
+            rel="shortcut icon"
+            href="/public/assets/images/icons/logo.ico"
+            type="image/x-icon"
+        />
+        <title>Compacter</title>
+    </head>
+
+    <body>
+        <a href="#main" class="skip-to-main-content-link"
+            >Skip to main content</a
+        >
+        <style>
+            .skip-to-main-content-link {
+                position: absolute;
+                left: -9999px;
+                z-index: 999;
+                padding: 1em;
+                background-color: black;
+                color: white;
+                opacity: 0;
+            }
+            .skip-to-main-content-link:focus {
+                left: 50%;
+                transform: translateX(-50%);
+                opacity: 1;
+            }
+        </style>
+        <div class="navbar navbar-expand-md bg-dark navbar-dark">
+            <div class="container">
+                <a href="/" class="navbar-brand text-info">Compacter</a>
+
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainmenu"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainmenu">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a href="#Features" class="nav-link">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#Trust" class="nav-link">Trust</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/feedback" class="nav-link">Support</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/about/commands" class="nav-link"
+                                >Commands</a
+                            >
+                        </li>
+                    </ul>
+                    <li class="navbar-nav nav-item">
+                        <a
+                            class="btn btn-outline-info"
+                            id="dynamicNavbarBtn"
+                            href="/login"
+                            >Login</a
+                        >
+                    </li>
+                </div>
+            </div>
+        </div>
+        <div id="main"></div>
+        <section class="bg-dark text-light text-center py-5">
+            <div class="container">
+                <div class="d-flex">
+                    <div>
+                        <h1><span class="text-info">Compacter</span></h1>
+                        <p>
+                            Compacter is an easy to use bot with features
+                            ranging from moderation to fun.
+                        </p>
+                        <a class="btn btn-info" href="/bot/invite"
+                            >Invite Bot</a
+                        >
+                        <a class="m-2 btn btn-light" href="/bot/support"
+                            >Support Server</a
+                        >
+                    </div>
+                    <img
+                        class="img-fluid w-50"
+                        src="/public/assets/images/Compacter.svg"
+                        alt=""
+                    />
+                </div>
+            </div>
+        </section>
+        <section id="Features" class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Features</h2>
+                <div class="row text-center">
+                    <div class="col-sm">
+                        <div class="card bg-dark text-light mb-3">
+                            <div class="h1 mt-3">
+                                <i class="bi bi-hourglass-split"></i>
+                            </div>
+                            <div class="card-body text-center">
+                                <h4 class="card-title text-info">
+                                    Easy to Use
+                                </h4>
+                                <p class="card-text">
+                                    Using the bot and setting it up shouldn't be
+                                    a challenge, so we simplified everything.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card bg-dark text-light mb-3">
+                            <div class="h1 mt-3">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <div class="card-body text-center">
+                                <h4 class="card-title text-info">
+                                    Advanced Moderation
+                                </h4>
+                                <p class="card-text">
+                                    Compacter uses the latest and most modern
+                                    methods to keep your server safe and in
+                                    check.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card bg-dark text-light mb-3">
+                            <div class="h1 mt-3">
+                                <i class="bi bi-clock-history"></i>
+                            </div>
+                            <div class="card-body text-center">
+                                <h4 class="card-title text-info">
+                                    Online 24/7
+                                </h4>
+                                <p class="card-text">
+                                    Compacter will always be there to keep your
+                                    server managed and to remove bad actors.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card bg-dark text-light mb-3">
+                            <div class="h1 mt-3">
+                                <i class="bi bi-braces"></i>
+                            </div>
+                            <div class="card-body text-center">
+                                <h4 class="card-title text-info">
+                                    Powerful AI
+                                </h4>
+                                <p class="card-text">
+                                    We use OpenAI's powerful AI technology like
+                                    ChatGPT and DALL·E for amazing text and
+                                    image generation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="Trust" class="py-5 bg-dark text-light">
+            <div class="container">
+                <div class="py-2 text-center">
+                    <h2>Trusted by</h2>
+                </div>
+                <div
+                    class="row align-items-center justify-content-center text-center -5"
+                >
+                    <div class="col">
+                        <img
+                            src="/public/assets/images/stats.svg"
+                            alt=""
+                            class="img-fluid d-none d-md-block"
+                        />
+                    </div>
+                    <div class="col-sm p-5 h1">
+                        <i class="bi bi-hdd-stack text-primary"></i>
+                        <h5>8</h5>
+                        <h5>Servers</h5>
+                    </div>
+                    <div class="col-sm p-5 h1">
+                        <i class="bi bi bi-people-fill text-primary"></i>
+                        <h5>10,000</h5>
+                        <h5>Users</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="footer-clean bg-dark">
+            <footer>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-3 col-md-3 item">
+                            <h3>Legal</h3>
+                            <ul>
+                                <li>
+                                    <a href="/legal/tos">Terms of Service</a>
+                                </li>
+                                <li>
+                                    <a href="/legal/prviacy">Privacy Policy</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-4 col-md-3 item">
+                            <h3>About</h3>
+                            <ul>
+                                <li>
+                                    <a href="/about">Who We Are</a>
+                                </li>
+                                <li>
+                                    <a href="/about/command">Commands</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-4 col-md-3 item">
+                            <h3>Bot</h3>
+                            <ul>
+                                <li>
+                                    <a href="/bot/support">Support</a>
+                                </li>
+                                <li><a href="/bot/invite">Invite</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 item social">
+                            <a href="/bot/support"
+                                ><ion-icon name="logo-discord"></ion-icon
+                            ></a>
+                            <p class="copyright">Compacter © 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <script src="./public/js/home/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script src="/public/js/error_pages/404.js"></script>
+        <script src="/public/js/error_pages/403.js"></script>
+        <script>
+            resetTimes404();
+            resetTimes403();
+        </script>
+        <script src="/public/js/tokenCheck.js"></script>
+        <script src="/public/js/regSW.js"></script>
+    </body>
+</html>

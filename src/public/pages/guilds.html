@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="../public/styles/home/bootstrap.min.css" rel="stylesheet" />
+        <link href="../public/styles/home/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../public/styles/commands.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+        />
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        ></script>
+        <link
+            rel="shortcut icon"
+            href="/public/assets/images/icons/logo.ico"
+            type="image/x-icon"
+        />
+        <title>Dashboard | Compacter</title>
+    </head>
+
+    <body>
+        <a href="#main" class="skip-to-main-content-link"
+            >Skip to main content</a
+        >
+        <style>
+            .skip-to-main-content-link {
+                position: absolute;
+                left: -9999px;
+                z-index: 999;
+                padding: 1em;
+                background-color: black;
+                color: white;
+                opacity: 0;
+            }
+            .skip-to-main-content-link:focus {
+                left: 50%;
+                transform: translateX(-50%);
+                opacity: 1;
+            }
+        </style>
+        <div class="navbar navbar-expand-md bg-dark navbar-dark">
+            <div class="container">
+                <a href="/" class="navbar-brand text-info">Compacter</a>
+
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainmenu"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainmenu">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a href="/#Features" class="nav-link">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/#Trust" class="nav-link">Trust</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/feedback" class="nav-link">Support</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/about/commands" class="nav-link"
+                                >Commands</a
+                            >
+                        </li>
+                    </ul>
+                    <li class="navbar-nav nav-item">
+                        <a
+                            class="btn btn-outline-info"
+                            id="dynamicNavbarBtn"
+                            href="/login"
+                            >Login</a
+                        >
+                    </li>
+                </div>
+            </div>
+        </div>
+        <div id="main"></div>
+        <div class="container">
+            <section style="margin-top: 9%">
+                <div class="row">
+                    <div class="col-sm-6 my-1">
+                        <h2 class="fw-bold">Select a server</h2>
+                        <p class="command-descreption">
+                            Select a server to manage it or invite the bot to it
+                        </p>
+                    </div>
+                </div>
+                <hr />
+            </section>
+            <div class="mt-4"></div>
+            <div class="row">
+                <div class="col-md-4 my-2">
+                    <div class="card p-3">
+                        <h5>
+                            Users with these permissions are able to manage
+                            servers.
+                        </h5>
+                        <hr />
+                        <section>
+                            <h5>
+                                <ul>
+                                    <li>Owner</li>
+                                    <li>Administrator</li>
+                                    <li>Manage Server</li>
+                                </ul>
+                            </h5>
+                        </section>
+                    </div>
+                    <div class="mt-4"></div>
+                    <div class="card p-3">
+                        <h5>Filters</h5>
+                        <hr />
+                        <input
+                            type="text"
+                            class="w-100 search-box"
+                            oninput="search(this.value)"
+                            placeholder="Filter servers"
+                        />
+                        <hr />
+                        <style>
+                            .search-box {
+                                border-radius: 10px;
+                                border-color: transparent;
+                                padding: 5px;
+                            }
+                            button.btn-primary {
+                                display: flex;
+                                align-content: flex-start;
+                            }
+                        </style>
+                        <button
+                            onclick="active(this)"
+                            id="CategoryBtnAll"
+                            class="text-decoration-none btn btn-primary mt-2 my-1 p-2"
+                        >
+                            <i class="bi bi-list-nested ttt"></i>&nbsp; All
+                            Servers
+                        </button>
+
+                        <button
+                            onclick="active(this)"
+                            id="CategoryBtn0"
+                            class="text-decoration-none btn btn-primary mt-2 my-1 p-2"
+                        >
+                            <i class="bi bi-award ttt"></i>&nbsp; Owned By Me
+                        </button>
+
+                        <button
+                            onclick="active(this)"
+                            id="CategoryBtn1"
+                            class="text-decoration-none btn btn-primary mt-2 my-1 p-2"
+                        >
+                            <i class="bi bi-shield ttt"></i>&nbsp; Moderated By
+                            Me
+                        </button>
+                        <button
+                            onclick="active(this)"
+                            id="CategoryBtn2"
+                            class="text-decoration-none btn btn-primary mt-2 my-1 p-2"
+                        >
+                            <i class="bi bi-clipboard ttt"></i>&nbsp; Managed By
+                            Me
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-8 my-0">
+                    <div id="guildsList">
+                        <div id="owner"></div>
+                        <div id="managed"></div>
+                        <div id="admin"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5"></div>
+        <div class="footer-clean bg-dark">
+            <footer>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-3 col-md-3 item">
+                            <h3>Legal</h3>
+                            <ul>
+                                <li>
+                                    <a href="/legal/tos">Terms of Service</a>
+                                </li>
+                                <li>
+                                    <a href="/legal/prviacy">Privacy Policy</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-4 col-md-3 item">
+                            <h3>About</h3>
+                            <ul>
+                                <li>
+                                    <a href="/about">Who We Are</a>
+                                </li>
+                                <li>
+                                    <a href="/about/command">Commands</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-4 col-md-3 item">
+                            <h3>Bot</h3>
+                            <ul>
+                                <li>
+                                    <a href="/bot/support">Support</a>
+                                </li>
+                                <li><a href="/bot/invite">Invite</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 item social">
+                            <a href="/bot/support"
+                                ><ion-icon name="logo-discord"></ion-icon
+                            ></a>
+                            <p class="copyright">Compacter © 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <script src="../public/js/home/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script src="/public/js/error_pages/404.js"></script>
+        <script src="/public/js/error_pages/403.js"></script>
+        <script>
+            resetTimes404();
+            resetTimes403();
+        </script>
+        <script src="/public/js/tokenCheck.js"></script>
+        <script src="/public/js/regSW.js" async></script>
+        <script src="/public/js/fetchData.js" async></script>
+        <script src="/public/js/handleGuilds.js"></script>
+        <script>
+            function active(elm) {
+                const option = elm.innerText.toLowerCase().replace(/\s+/g, '');
+
+                const owned = document.getElementById('owner');
+                const managed = document.getElementById('managed');
+                const admin = document.getElementById('admin');
+
+                owned.hidden = true;
+                managed.hidden = true;
+                admin.hidden = true;
+
+                const allButton = document.getElementById('CategoryBtnAll');
+                const cat0Button = document.getElementById('CategoryBtn0');
+                const cat1Button = document.getElementById('CategoryBtn1');
+                const cat2Button = document.getElementById('CategoryBtn2');
+
+                allButton.classList.remove('active');
+                cat0Button.classList.remove('active');
+                cat1Button.classList.remove('active');
+                cat2Button.classList.remove('active');
+
+                elm.classList.add('active');
+
+                if (option == 'allservers') {
+                    owned.hidden = false;
+                    managed.hidden = false;
+                    admin.hidden = false;
+                } else if (option == 'ownedbyme') {
+                    owned.hidden = false;
+                    managed.hidden = true;
+                    admin.hidden = true;
+                } else if (option == 'moderatedbyme') {
+                    owned.hidden = true;
+                    managed.hidden = true;
+                    admin.hidden = false;
+                } else if (option == 'managedbyme') {
+                    owned.hidden = true;
+                    managed.hidden = false;
+                    admin.hidden = true;
+                } else {
+                    active(undefined);
+                }
+            }
+
+            function search(arg) {
+                const items = document.getElementsByClassName('guild-name');
+
+                Array.from(items).forEach((item) => {
+                    const parent =
+                        item.parentElement.parentElement.parentElement;
+                    if (item.innerText.toLowerCase().includes(arg)) {
+                        parent.hidden = false;
+                    } else {
+                        parent.hidden = true;
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

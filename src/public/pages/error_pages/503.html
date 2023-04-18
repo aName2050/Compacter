@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="The dashboard for Compacter" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Unavailable</title>
+        <link rel="stylesheet" href="/public/styles/error_pages/404.css" />
+        <style>
+            a#goback {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="terminal">
+            <h1>Error <span class="errorcode">503</span></h1>
+            <p class="output">The page or service is currently unavailable</p>
+            <p class="output">
+                Try <a href="/">going home</a> or
+                <a onclick="history.back()" id="goback">going back</a>
+            </p>
+            <p class="output">Come back later.</p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="The dashboard for Compacter" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Forbidden | CSRF</title>
+        <link rel="stylesheet" href="/public/styles/error_pages/404.css" />
+        <style>
+            a#goBack {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="terminal">
+            <h1>Error <span class="errorcode">403</span></h1>
+            <p class="output">Forbidden</p>
+            <p class="output">
+                A CSRF (Cross Site Request Forgery) attack has been detected
+            </p>
+            <p class="output">You may also just not have access to this page</p>
+            <p class="output">
+                Try <a href="/">going home</a> or <a id="goBack">going back</a>
+            </p>
+            <p class="output">Stay safe friend.</p>
+        </div>
+    </body>
+    <script src="/public/js/error_pages/403.js" type="text/javascript"></script>
+    <script>
+        updateAndCheckTimes403();
+        var goBackLink = document.getElementById('goBack');
+
+        goBackLink.onclick = () => {
+            history.back();
+        };
+    </script>
+</html>
