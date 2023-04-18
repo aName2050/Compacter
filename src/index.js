@@ -16,6 +16,7 @@ const { PORT, REDIRECTS, COOKIE_SECRET } = webConfig;
 
 const { sendError } = require('./util/helpers/sendError.js');
 const { getPerm } = require('./util/APIs/app/dPermBigint.js');
+const { log } = require('./util/helpers/log.js');
 
 const app = express();
 
@@ -29,20 +30,31 @@ async function connectDB() {
     await mongoose
         .connect(botConfig.MONGO_SRV, {})
         .then(() => {
-            console.log(
-                chalk.cyanBright('[SERVER] ') +
-                    chalk.bold('MongoDB ') +
-                    chalk.greenBright('CONNECTED')
+            log(
+                chalk.bgCyan.bold(' SERVER '),
+                true,
+                'MongoDB Database ',
+                chalk.greenBright(' CONNECTED')
             );
         })
         .catch((err) => {
-            console.log(chalk.redBright('-- MONGODB CONNECT ERROR --'));
+            log(
+                chalk.bgCyan.bold(' SERVER '),
+                true,
+                'MongoDB Database ',
+                chalk.redBright(' Failed to connect')
+            );
             console.log(err);
         });
 }
 
 mongoose.connection.on('error', (err) => {
-    console.log(chalk.redBright('-- MONGODB CONNECTION ERROR --'));
+    log(
+        chalk.bgGreen.bold(' MONGO '),
+        true,
+        'MongoDB Database ',
+        chalk.redBright(' Connection error')
+    );
     console.error(err);
 });
 
@@ -199,10 +211,12 @@ const manager = new discord.ShardingManager('./src/bot/bot.js', {
     respawn: true,
 });
 manager.on('shardCreate', (shard) => {
-    console.log(
-        `${chalk.cyanBright('[SERVER]')} Bot Shard ${chalk.bold(
-            `${shard.id}`
-        )} ${chalk.green('ONLINE')}`
+    log(
+        chalk.bgCyan.bold(' SERVER '),
+        true,
+        'Bot Shard ',
+        chalk.bold(shard.id),
+        chalk.greenBright(' ONLINE')
     );
 });
 
@@ -210,8 +224,11 @@ manager.spawn();
 
 // Listen
 app.listen(PORT, () => {
-    console.log(
-        chalk.cyanBright('[SERVER] ') + 'Listening on port ' + chalk.bold(PORT)
+    log(
+        chalk.bgCyan.bold(' SERVER '),
+        true,
+        'Listening on port ',
+        chalk.bold(PORT)
     );
 });
 

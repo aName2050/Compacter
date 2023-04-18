@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const { log } = require('../util/helpers/log.js');
 const {
     Client,
     GatewayIntentBits,
@@ -56,11 +57,12 @@ client.debug = [];
 client
     .login(client.config.Token)
     .then(() => {
-        console.log(
-            chalk.cyanBright('[CLIENT]') +
-                ` ${chalk.greenBright('Logged in')} as ${chalk.bold(
-                    client.user.tag
-                )}`
+        log(
+            chalk.bgMagentaBright.bold(' CLIENT '),
+            true,
+            chalk.greenBright('Logged in'),
+            ' as ',
+            chalk.bold(client.user.tag)
         );
     })
     .catch((err) => console.log(err));
