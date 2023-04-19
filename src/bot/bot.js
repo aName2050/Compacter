@@ -29,7 +29,7 @@ const client = new Client({
     partials: [User, Message, GuildMember, ThreadMember],
 });
 
-// const { loadEvents } = require('./Handlers/eventHandler');
+const { loadEvents } = require('./handlers/eventHandler.js');
 
 client.config = require('../../config/bot.json');
 client.events = new Collection();
@@ -45,9 +45,8 @@ client.errors = {
     selectMenus: [],
     modals: [],
 };
-client.debug = [];
 
-// loadEvents(client);
+loadEvents(client);
 
 // require('./Handlers/crashHandler')(client);
 // ['giveawaysys'].forEach((system) => {
@@ -60,6 +59,7 @@ client
         log(
             chalk.bgMagentaBright.bold(' CLIENT '),
             true,
+            chalk.yellow.bold('::1 '),
             chalk.greenBright('Logged in'),
             ' as ',
             chalk.bold(client.user.tag)
