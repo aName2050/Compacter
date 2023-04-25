@@ -19,11 +19,29 @@ async function loadEvents(client) {
             target[event.once ? 'once' : 'on'](event.name, execute);
             client.events.set(event.name, execute);
 
-            events.push({ Event: event.name, Status: chalk.greenBright('██') });
+            if (event.rest) {
+                events.push({
+                    Event: event.name,
+                    Status: chalk.rgb(255, 165, 0)('██  '),
+                });
+                continue;
+            }
+            if (event.once) {
+                events.push({
+                    Event: event.name,
+                    Status: chalk.blue('██  '),
+                });
+                continue;
+            }
+
+            events.push({
+                Event: event.name,
+                Status: chalk.greenBright('██  '),
+            });
         } catch (error) {
             events.push({
                 Event: file.split('/').pop().slice(0, -3),
-                Status: chalk.redBright('██'),
+                Status: chalk.redBright('██  '),
             });
         }
     }
