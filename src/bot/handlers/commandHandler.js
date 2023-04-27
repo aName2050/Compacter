@@ -12,7 +12,7 @@ async function loadCommands(client) {
 
     const files = await loadFiles('Commands');
 
-    for (const file in files) {
+    for (const file of files) {
         try {
             const command = require(file);
 
@@ -24,13 +24,15 @@ async function loadCommands(client) {
                     Parent: parent,
                     Status: chalk.greenBright('██  '),
                 });
-                return client.subCommands.set(command.subCommand, command);
+                client.subCommands.set(command.subCommand, command);
+                continue;
             }
 
             if (!command.data)
                 commands.push({
                     Command: file.split('/').pop().slice(0, -3),
                     Status: chalk.redBright('██  '),
+                    Error: 'Missing command data',
                 });
 
             if (command.data) {
@@ -38,6 +40,7 @@ async function loadCommands(client) {
                     commands.push({
                         Command: file.split('/').pop().slice(0, -3),
                         Status: chalk.redBright('██  '),
+                        Error: 'Missing command name',
                     });
                 if (
                     !command.data.description &&
@@ -47,6 +50,7 @@ async function loadCommands(client) {
                     commands.push({
                         Command: file.split('/').pop().slice(0, -3),
                         Status: chalk.redBright('██  '),
+                        Error: 'Missing command description',
                     });
             }
 
@@ -55,30 +59,42 @@ async function loadCommands(client) {
 
             if (command.inDev) {
                 commands.push({
-                    Command: command.data.name,
+                    Command:
+                        command.data.name ?? file.split('/').pop().slice(0, -3),
                     Status: chalk.rgb(255, 165, 0)('██  '),
                 });
                 continue;
             }
             if (command.developer) {
                 commands.push({
-                    Command: command.data.name,
-                    Status: chalk.blue('██  '),
+                    Command:
+                        command.data.name ?? file.split('/').pop().slice(0, -3),
+                    Status: chalk.cyan('██  '),
                 });
                 continue;
             }
             if (command.ignoreExecuteCheck) {
                 commands.push({
-                    Command: command.data.name,
+                    Command:
+                        command.data.name ?? file.split('/').pop().slice(0, -3),
                     Status: chalk.magenta('██  '),
                 });
                 continue;
             }
-        } catch (error) {
+
             commands.push({
-                Command: file.split('/').pop().slice(0, -3),
-                Status: chalk.redBright('██  '),
+                Command:
+                    command.data.name ?? file.split('/').pop().slice(0, -3),
+                Status: chalk.greenBright('██  '),
             });
+        } catch (error) {
+            log(
+                chalk.bgMagentaBright.bold(' CLIENT '),
+                true,
+                chalk.yellow.bold(`... `),
+                chalk.redBright(`${chalk.bold('ERROR')} while loading commands`)
+            );
+            console.log(error);
         }
     }
 
@@ -93,17 +109,18 @@ async function loadCommands(client) {
         ' commands in ',
         chalk.white.bold(`${Date.now() - start}ms`)
     );
-    printTable(commands);
+    if (commands) printTable(commands);
+
     log(
         chalk.bgMagentaBright.bold(' CLIENT '),
         true,
         chalk.yellow.bold(`... `),
         chalk.greenBright('Loaded '),
-        chalk.white.bold(`(${commands.length})`),
+        chalk.white.bold(`(${subcommands.length})`),
         ' subcommands in ',
         chalk.white.bold(`${Date.now() - start}ms`)
     );
-    printTable(subcommands);
+    if (subcommands.length) printTable(subcommands);
 }
 
 module.exports = { loadCommands };

@@ -2,14 +2,21 @@ const {
     ChatInputCommandInteraction,
     SlashCommandBuilder,
     Events,
+    PermissionFlagsBits,
 } = require('discord.js');
 
 module.exports = {
     developer: true,
+    context: false,
+    message: false,
+    ignoreExecuteCheck: false,
+    inDev: false,
+    disabled: false,
+    requiredBotPermissions: [PermissionFlagsBits.SendMessages],
     data: new SlashCommandBuilder()
         .setName('emit')
         .setDescription('Emit an event')
-        .addStringOption((option) => {
+        .addStringOption(option =>
             option
                 .setName('event')
                 .setDescription('Select an event to emit')
@@ -19,8 +26,8 @@ module.exports = {
                     { name: 'guildMemberRemove', value: 'guildMemberRemove' },
                     { name: 'guildCreate', value: 'guildCreate' },
                     { name: 'guildDelete', value: 'guildDelete' }
-                );
-        })
+                )
+        )
         .setDMPermission(false),
     /**
      *

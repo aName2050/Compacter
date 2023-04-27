@@ -38,7 +38,7 @@ async function connectDB() {
                 chalk.greenBright(' CONNECTED')
             );
         })
-        .catch((err) => {
+        .catch(err => {
             log(
                 chalk.bgCyan.bold(' SERVER '),
                 true,
@@ -50,7 +50,7 @@ async function connectDB() {
         });
 }
 
-mongoose.connection.on('error', (err) => {
+mongoose.connection.on('error', err => {
     log(
         chalk.bgGreen.bold(' MONGO '),
         true,
@@ -336,7 +336,7 @@ const manager = new discord.ShardingManager('./src/bot/bot.js', {
     token: botConfig.Token,
     respawn: true,
 });
-manager.on('shardCreate', (shard) => {
+manager.on('shardCreate', shard => {
     log(
         chalk.bgCyan.bold(' SERVER '),
         true,

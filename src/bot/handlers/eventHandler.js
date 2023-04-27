@@ -13,6 +13,9 @@ async function loadEvents(client) {
     for (const file of files) {
         try {
             const event = require(file);
+
+            if (!event?.name || !event?.execute) continue;
+
             const execute = (...args) => event.execute(...args, client);
             const target = event.rest ? client.rest : client;
 
@@ -39,10 +42,13 @@ async function loadEvents(client) {
                 Status: chalk.greenBright('██  '),
             });
         } catch (error) {
-            events.push({
-                Event: file.split('/').pop().slice(0, -3),
-                Status: chalk.redBright('██  '),
-            });
+            log(
+                chalk.bgMagentaBright.bold(' CLIENT '),
+                true,
+                chalk.yellow.bold(`... `),
+                chalk.redBright(`${chalk.bold('ERROR')} while loading events`)
+            );
+            console.log(error);
         }
     }
     log(

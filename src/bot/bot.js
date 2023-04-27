@@ -65,4 +65,4 @@ client
             chalk.bold(client.user.tag)
         );
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));

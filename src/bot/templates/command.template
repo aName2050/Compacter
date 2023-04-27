@@ -1,0 +1,28 @@
+const {
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+  PermissionFlagsBits,
+  EmbedBuilder
+} = require("discord.js");
+
+module.exports = {
+  developer: false,
+  context: false,
+  message: false,
+  ignoreExecuteCheck: false,
+  inDev: true,
+  disabled: false,
+  requiredBotPermissions: [],
+  data: new SlashCommandBuilder()
+  .setName("")
+  .setDescription("")
+  .setDMPermission(false)
+  ,
+  /**
+   *
+   * @param {ChatInputCommandInteraction} interaction
+   */
+  execute(interaction, client) {
+
+  },
+};
