@@ -28,7 +28,7 @@ module.exports = {
 
             if (
                 (command.developer || command.inDev) &&
-                interaction.user.id !== client.application.owner.id
+                interaction.user.id !== '733422078501322887'
             )
                 return interaction.reply({
                     content:
@@ -69,13 +69,14 @@ module.exports = {
                 try {
                     command.execute(interaction, client);
                     interaction.channel.send({
-                        content: '```apache\nNOTICE: msg```',
+                        content: `<@${interaction.user.id}>\n\`\`\`apache\nNOTICE: hello!\`\`\``,
                     });
                 } catch (error) {
                     interaction.reply({
-                        content: '```apache\nERROR: ' + error + '```',
+                        content: `\`\`\`apache\nERROR: ${error}\`\`\``,
                         ephemeral: true,
                     });
+                    console.log(error);
                 }
             }
         }

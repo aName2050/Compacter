@@ -3,7 +3,7 @@ const { printTable } = require('console-table-printer');
 const chalk = require('chalk');
 const { log } = require('../../../util/helpers/log');
 
-const { loadCommands } = require('../../handlers/commandHandler.js');
+const { loadCommands } = require('../../Handlers/commandHandler.js');
 // const { loadButtons } = require('../../Handlers/buttonHandler');
 // const { loadSelectMenus } = require('../../Handlers/selectMenuHandler');
 // const { loadModals } = require('../../Handlers/modalHandler');
@@ -50,13 +50,13 @@ module.exports = {
         if (client.ws.ping > 350)
             clientDetails.push({
                 Item: 'Latency',
-                Status: chalk.redBright('██  '),
+                Status: chalk.red('██  '),
                 Details: `${client.ws.ping}ms`,
             });
         else if (client.ws.ping > 199)
             clientDetails.push({
                 Item: 'Latency',
-                Status: chalk.yellowBright('██  '),
+                Status: chalk.yellow('██  '),
                 Details: `${client.ws.ping}ms`,
             });
         else if (client.ws.ping < 200)

@@ -29,7 +29,7 @@ const client = new Client({
     partials: [User, Message, GuildMember, ThreadMember],
 });
 
-const { loadEvents } = require('./handlers/eventHandler.js');
+const { loadEvents } = require('./Handlers/eventHandler.js');
 
 client.config = require('../../config/bot.json');
 client.events = new Collection();
