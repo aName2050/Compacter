@@ -68,9 +68,9 @@ module.exports = {
             } else {
                 try {
                     command.execute(interaction, client);
-                    interaction.channel.send({
-                        content: `<@${interaction.user.id}>\n\`\`\`apache\nNOTICE: hello!\`\`\``,
-                    });
+                    // interaction.channel.send({
+                    //     content: `<@${interaction.user.id}>\n\`\`\`apache\nNOTICE: hello!\`\`\``,
+                    // });
                 } catch (error) {
                     interaction.reply({
                         content: `\`\`\`apache\nERROR: ${error}\`\`\``,

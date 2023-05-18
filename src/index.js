@@ -9,7 +9,6 @@ const chalk = require('chalk');
 const mongoose = require('mongoose');
 
 const cookieParser = require('cookie-parser');
-const nanoid = require('nanoid');
 const bodyParser = require('body-parser');
 
 const { PORT, REDIRECTS, COOKIE_SECRET } = webConfig;
@@ -20,39 +19,9 @@ const { log } = require('./util/helpers/log.js');
 
 const app = express();
 
-// Database
-connectDB();
-
-async function connectDB() {
-    if (!botConfig.MONGO_SRV)
-        return console.log(chalk.redBright('ERR: MongoDB SRV missing'));
-
-    await mongoose
-        .connect(botConfig.MONGO_SRV, {})
-        .then(() => {
-            log(
-                chalk.bgCyan.bold(' SERVER '),
-                true,
-                chalk.yellow.bold('::1 '),
-                'MongoDB Database ',
-                chalk.greenBright(' CONNECTED')
-            );
-        })
-        .catch(err => {
-            log(
-                chalk.bgCyan.bold(' SERVER '),
-                true,
-                chalk.yellow.bold('::1 '),
-                'MongoDB Database ',
-                chalk.redBright(' Failed to connect')
-            );
-            console.log(err);
-        });
-}
-
 mongoose.connection.on('error', err => {
     log(
-        chalk.bgGreen.bold(' MONGO '),
+        chalk.bgGreen.bold(' MONGDB '),
         true,
         chalk.yellow.bold('::1 '),
         'MongoDB Database ',
@@ -243,6 +212,7 @@ app.post('/api/post/cookies/set', (req, res) => {
 // Events
 app.on('get', (route, req) => {
     const ip = getRequestIP(req);
+    if (route.includes('/api/get/permissions?int=')) return;
     log(
         chalk.bgBlue.bold('  HTTP  '),
         true,
@@ -298,6 +268,7 @@ app.on('patch', (route, req) => {
 });
 app.on('httpDone', (route, code, method, req) => {
     const ip = getRequestIP(req);
+    if (route.includes('/api/get/permissions?int=')) return;
     log(
         chalk.bgBlue.bold('  HTTP  '),
         true,
@@ -377,8 +348,8 @@ function clearStateCookie(req, res) {
  * @returns {String} IP
  */
 function getRequestIP(req) {
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    const localIp = req.socket.localAddress;
+    const ip = req?.headers['x-forwarded-for'] || req?.socket.remoteAddress;
+    const localIp = req?.socket.localAddress;
     if (ip == localIp) return '::1';
     else return `${ip} `;
 }

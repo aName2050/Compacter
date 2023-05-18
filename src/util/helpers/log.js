@@ -13,12 +13,13 @@ function getTimestamp() {
     const timestamp = `${pad(date.getMonth() + 1, 2)}/${pad(
         date.getDate(),
         2
-    )}/${date.getFullYear()} ${pad(date.getHours() - 12, 2)}:${pad(
-        date.getMinutes(),
+    )}/${date.getFullYear()} ${pad(
+        date.getHours() > 12 ? date.getHours() - 12 : date.getHours(),
         2
-    )}:${pad(date.getSeconds(), 2)}.${pad(date.getMilliseconds(), 3)} ${
-        date.getHours() >= 12 ? 'PM' : 'AM'
-    }`;
+    )}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}.${pad(
+        date.getMilliseconds(),
+        3
+    )} ${date.getHours() >= 12 ? 'PM' : 'AM'}`;
     return chalk.grey(timestamp);
 }
 function pad(num, size) {

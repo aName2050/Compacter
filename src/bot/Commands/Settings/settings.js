@@ -10,13 +10,6 @@ const {
 } = require('discord.js');
 const guildSettings = require('../../../private/mongodb/guildSettings.js');
 
-const {
-    SlashCommandBuilder,
-    ChatInputCommandInteraction,
-    PermissionFlagsBits,
-    EmbedBuilder,
-} = require('discord.js');
-
 module.exports = {
     developer: false,
     context: false,
@@ -35,9 +28,8 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
-        const Settings = await guildSettings.findOne({
-            GuildID: interaction.guild.id,
-        });
+        const guildID = interaction.guild.id;
+        const Settings = await guildSettings.findOne({ GuildID: guildID });
 
         let channels = {
                 msgReport: '*Not set*',
@@ -97,5 +89,7 @@ module.exports = {
             .setFooter({
                 text: 'Select an option from the dropdown below to edit that setting',
             });
+
+        interaction.reply({ embeds: [embed] });
     },
 };

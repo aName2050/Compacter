@@ -2,6 +2,8 @@ const { Client, ActivityType, Events } = require('discord.js');
 const { printTable } = require('console-table-printer');
 const chalk = require('chalk');
 const { log } = require('../../../util/helpers/log');
+const mongoose = require('mongoose');
+const botConfig = require('../../../../config/bot.json');
 
 const { loadCommands } = require('../../Handlers/commandHandler.js');
 // const { loadButtons } = require('../../Handlers/buttonHandler');
@@ -36,6 +38,38 @@ module.exports = {
         // await loadSelectMenus(client);
         // await loadModals(client);
 
+        // Connect database
+        if (!botConfig.MONGO_SRV)
+            log(
+                chalk.bgGreen.bold(' MONGDB '),
+                true,
+                chalk.yellow.bold('::1 '),
+                chalk.redBright('Missing SRV')
+            );
+        else {
+            await mongoose
+                .connect(botConfig.MONGO_SRV, { autoIndex: true })
+                .then(() => {
+                    log(
+                        chalk.bgGreen.bold(' MONGDB '),
+                        true,
+                        chalk.yellow.bold('::1 '),
+                        chalk.greenBright('CONNECTED')
+                    );
+                })
+                .catch(err => {
+                    log(
+                        chalk.bgGreen.bold(' MONGDB '),
+                        true,
+                        chalk.yellow.bold('::1 '),
+                        chalk.redBright('Failed to connect')
+                    );
+                    console.log(err);
+                });
+        }
+
+        const totalShards = client.shard.count;
+
         const clientDetails = new Array();
         clientDetails.push({
             Item: 'Client',
@@ -69,7 +103,7 @@ module.exports = {
         clientDetails.push({
             Item: 'Shards',
             Status: chalk.greenBright('██  '),
-            Details: 'Ready',
+            Details: `${totalShards} loaded`,
         });
 
         if (client.errors.commands.length >= 1)
@@ -149,5 +183,12 @@ module.exports = {
             'Client Details'
         );
         printTable(clientDetails);
+        log(
+            chalk.bgGreen.bold(' CLIENT '),
+            true,
+            chalk.yellow.bold(`... `),
+            'Bot Client ',
+            chalk.greenBright('READY')
+        );
     },
 };
