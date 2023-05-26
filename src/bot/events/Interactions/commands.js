@@ -1,6 +1,5 @@
 const {
     CommandInteraction,
-    EmbedBuilder,
     Events,
     Client,
     PermissionFlagsBits,
@@ -14,7 +13,7 @@ module.exports = {
      * @param {Client} client
      */
     execute(interaction, client) {
-        if (interaction.replied) return;
+        if (!interaction.isRepliable) return;
         if (
             interaction.isChatInputCommand() ||
             interaction.isContextMenuCommand()

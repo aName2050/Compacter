@@ -109,7 +109,7 @@ async function loadCommands(client) {
         ' commands in ',
         chalk.white.bold(`${Date.now() - start}ms`)
     );
-    if (commands) printTable(commands);
+    if (commands.length) printTable(commands);
 
     log(
         chalk.bgMagentaBright.bold(' CLIENT '),

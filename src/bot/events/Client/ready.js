@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const botConfig = require('../../../../config/bot.json');
 
 const { loadCommands } = require('../../Handlers/commandHandler.js');
-// const { loadButtons } = require('../../Handlers/buttonHandler');
-// const { loadSelectMenus } = require('../../Handlers/selectMenuHandler');
+const { loadButtons } = require('../../Handlers/buttonHandler');
+const { loadSelectMenus } = require('../../Handlers/selectMenuHandler');
 // const { loadModals } = require('../../Handlers/modalHandler');
 
 module.exports = {
@@ -34,8 +34,8 @@ module.exports = {
         }, 10 * 60000);
 
         await loadCommands(client);
-        // await loadButtons(client);
-        // await loadSelectMenus(client);
+        await loadButtons(client);
+        await loadSelectMenus(client);
         // await loadModals(client);
 
         // Connect database
@@ -106,75 +106,40 @@ module.exports = {
             Details: `${totalShards} loaded`,
         });
 
-        if (client.errors.commands.length >= 1)
-            clientDetails.push({
-                Item: 'Commands',
-                Status: chalk.redBright('██  '),
-                Details: `${client.commands.size} loaded, ${client.errors.commands.length} error(s)`,
-            });
-        else
-            clientDetails.push({
-                Item: 'Commands',
-                Status: chalk.greenBright('██  '),
-                Details: `${client.commands.size} loaded`,
-            });
+        clientDetails.push({
+            Item: 'Commands',
+            Status: chalk.greenBright('██  '),
+            Details: `${client.commands.size} loaded`,
+        });
         clientDetails.push({
             Item: 'Subcommands',
             Status: chalk.greenBright('██  '),
             Details: `${client.subCommands.size} loaded`,
         });
 
-        if (client.errors.events.length >= 1)
-            clientDetails.push({
-                Item: 'Events',
-                Status: chalk.redBright('██  '),
-                Details: `${client.events.size} loaded, ${client.errors.events.length} error(s)`,
-            });
-        else
-            clientDetails.push({
-                Item: 'Events',
-                Status: chalk.greenBright('██  '),
-                Details: `${client.events.size} loaded`,
-            });
+        clientDetails.push({
+            Item: 'Events',
+            Status: chalk.greenBright('██  '),
+            Details: `${client.events.size} loaded`,
+        });
 
-        if (client.errors.buttons.length >= 1)
-            clientDetails.push({
-                Item: 'Buttons',
-                Status: chalk.redBright('██  '),
-                Details: `${client.buttons.size} loaded, ${client.errors.buttons.length} error(s)`,
-            });
-        else
-            clientDetails.push({
-                Item: 'Buttons',
-                Status: chalk.greenBright('██  '),
-                Details: `${client.buttons.size} loaded`,
-            });
+        clientDetails.push({
+            Item: 'Buttons',
+            Status: chalk.greenBright('██  '),
+            Details: `${client.buttons.size} loaded`,
+        });
 
-        if (client.errors.selectMenus.length >= 1)
-            clientDetails.push({
-                Item: 'Select Menus',
-                Status: chalk.redBright('██  '),
-                Details: `${client.selectMenus.size} loaded, ${client.errors.selectMenus.length} error(s)`,
-            });
-        else
-            clientDetails.push({
-                Item: 'Select Menus',
-                Status: chalk.greenBright('██  '),
-                Details: `${client.selectMenus.size} loaded`,
-            });
+        clientDetails.push({
+            Item: 'Select Menus',
+            Status: chalk.greenBright('██  '),
+            Details: `${client.selectMenus.size} loaded`,
+        });
 
-        if (client.errors.modals.length >= 1)
-            clientDetails.push({
-                Item: 'Modals',
-                Status: chalk.redBright('██  '),
-                Details: `${client.modals.size} loaded, ${client.errors.modals.length} error(s)`,
-            });
-        else
-            clientDetails.push({
-                Item: 'Modals',
-                Status: chalk.greenBright('██  '),
-                Details: `${client.modals.size} loaded`,
-            });
+        clientDetails.push({
+            Item: 'Modals',
+            Status: chalk.greenBright('██  '),
+            Details: `${client.modals.size} loaded`,
+        });
 
         log(
             chalk.bgGreen.bold(' CLIENT '),

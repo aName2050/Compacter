@@ -38,13 +38,6 @@ client.subCommands = new Collection();
 client.buttons = new Collection();
 client.selectMenus = new Collection();
 client.modals = new Collection();
-client.errors = {
-    commands: [],
-    events: [],
-    buttons: [],
-    selectMenus: [],
-    modals: [],
-};
 
 loadEvents(client);
 

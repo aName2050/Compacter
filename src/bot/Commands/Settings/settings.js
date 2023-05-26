@@ -28,8 +28,9 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
-        const guildID = interaction.guild.id;
-        const Settings = await guildSettings.findOne({ GuildID: guildID });
+        const Settings = await guildSettings.findOne({
+            GuildID: interaction.guildId,
+        });
 
         let channels = {
                 msgReport: '*Not set*',
@@ -42,28 +43,37 @@ module.exports = {
             },
             premium = 'Free';
 
-        if (Settings) {
-            channels = {
-                msgReport: Settings.ReportChannel
-                    ? `<#${Settings.ReportChannel}>`
+        let resetDisabled;
+
+        if (
+            Settings?.ReportChannel == '' &&
+            Settings?.MsgEventChannel == '' &&
+            Settings?.ModActionChannel == '' &&
+            Settings?.MemberLogChannel == '' &&
+            Settings?.RulesChannel == ''
+        )
+            resetDisabled = true;
+
+        channels = {
+            msgReport: Settings?.ReportChannel
+                ? `<#${Settings?.ReportChannel}>`
+                : '*Not set*',
+            msgEvent: Settings?.MsgEventChannel
+                ? `<#${Settings?.MsgEventChannel}>`
+                : '*Not set*',
+            moderation: Settings?.ModActionChannel
+                ? `<#${Settings?.ModActionChannel}>`
+                : '*Not set*',
+            memberLogging: {
+                channel: Settings?.MemberLogChannel
+                    ? `<#${Settings?.MemberLogChannel}>`
                     : '*Not set*',
-                msgEvent: Settings.MsgEventChannel
-                    ? `<#${Settings.MsgEventChannel}>`
+                rules: Settings?.RulesChannel
+                    ? `<#${Settings.RulesChannel}>`
                     : '*Not set*',
-                moderation: Settings.ModActionChannel
-                    ? `<#${Settings.ModActionChannel}>`
-                    : '*Not set*',
-                memberLogging: {
-                    channel: Settings.WelcomeLeaveChannel
-                        ? `<#${Settings.WelcomeLeaveChannel}>`
-                        : '*Not set*',
-                    rules: Settings.Rules
-                        ? `<#${Settings.Rules}>`
-                        : '*Not set*',
-                },
-            };
-            premium = Settings.premium ? Settings.premium : 'Free';
-        }
+            },
+        };
+        premium = Settings?.premium ? Settings.premium : 'Free';
 
         const embed = new EmbedBuilder()
             .setTitle('Server Settings')
@@ -90,6 +100,62 @@ module.exports = {
                 text: 'Select an option from the dropdown below to edit that setting',
             });
 
-        interaction.reply({ embeds: [embed] });
+        const actionRow = new ActionRowBuilder().setComponents(
+            new StringSelectMenuBuilder()
+                .setCustomId('settings.selectSetting')
+                .setPlaceholder('No setting selected')
+                .setOptions(
+                    {
+                        label: 'Message Report Logging',
+                        description:
+                            'The channel where reported messages will be sent to',
+                        value: 'settings.msgreport.0',
+                    },
+                    {
+                        label: 'Message Event Logging',
+                        description:
+                            'The channel where message events (edit, delete, etc.) will be sent to',
+                        value: 'settings.msgevent.1',
+                    },
+                    {
+                        label: 'Moderation Logging',
+                        description:
+                            'The channel where moderation logs are sent to',
+                        value: 'settings.modactions.2',
+                    },
+                    {
+                        label: 'Member Logging',
+                        description:
+                            'The channel where member logs (join/leave) are sent to',
+                        value: 'settings.memberlog.3',
+                    },
+                    {
+                        label: 'Compacter Premium',
+                        description:
+                            'Manage your Compacter Premium subscription',
+                        value: 'settings.premium.4',
+                    }
+                )
+        );
+        const actionRow2 = new ActionRowBuilder().setComponents(
+            new ButtonBuilder()
+                .setCustomId('settings.resetAll')
+                .setStyle(ButtonStyle.Danger)
+                .setLabel('Reset all settings')
+                .setDisabled(resetDisabled),
+            new ButtonBuilder()
+                .setCustomId('settings.hideMenu')
+                .setStyle(ButtonStyle.Secondary)
+                .setLabel('Hide settings menu'),
+            new ButtonBuilder()
+                .setCustomId('settings.refresh')
+                .setStyle(ButtonStyle.Secondary)
+                .setLabel('Refresh')
+        );
+
+        interaction.reply({
+            embeds: [embed],
+            components: [actionRow, actionRow2],
+        });
     },
 };
