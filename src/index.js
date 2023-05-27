@@ -305,7 +305,7 @@ app.on('httpError', (route, errCode, method, req) => {
 const manager = new discord.ShardingManager('./src/bot/bot.js', {
     totalShards: 'auto',
     token: botConfig.Token,
-    respawn: true,
+    respawn: false,
 });
 manager.on('shardCreate', shard => {
     log(

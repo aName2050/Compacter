@@ -27,6 +27,12 @@ async function loadButtons(client) {
                     Error: 'Missing execute function',
                 });
 
+            if (button.id && button.execute)
+                buttons.push({
+                    Button: button.id,
+                    Status: chalk.greenBright('██  '),
+                });
+
             client.buttons.set(button.id, button);
         } catch (e) {
             log(
@@ -36,7 +42,6 @@ async function loadButtons(client) {
                 chalk.redBright(`${chalk.bold('ERROR')} while loading buttons`)
             );
             console.log(error);
-            nsole;
         }
     }
 

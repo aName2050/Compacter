@@ -27,6 +27,12 @@ async function loadSelectMenus(client) {
                     Error: 'Missing execute function',
                 });
 
+            if (selectMenu.id && selectMenu.execute)
+                menus.push({
+                    SelectMenu: selectMenu.id,
+                    Status: chalk.greenBright('██  '),
+                });
+
             client.selectMenus.set(selectMenu.id, selectMenu);
         } catch (e) {
             log(

@@ -7,7 +7,7 @@ module.exports = {
      * @param {BaseInteraction} interaction
      */
     execute(interaction, client) {
-        if (!nteraction.isRepliable) return;
+        if (!interaction.isRepliable) return;
         if (!interaction.isAnySelectMenu()) return;
 
         const selectMenu = client.selectMenus.get(interaction.customId);

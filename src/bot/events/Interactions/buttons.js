@@ -14,7 +14,7 @@ module.exports = {
 
         const button = client.buttons.get(interaction.customId.split(':')[0]);
 
-        if (!Button)
+        if (!button)
             return interaction.reply({
                 content: '```apache\nERROR: button does not exist```',
                 ephemeral: true,
