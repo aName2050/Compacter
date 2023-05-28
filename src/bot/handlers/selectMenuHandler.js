@@ -43,7 +43,7 @@ async function loadSelectMenus(client) {
                     `${chalk.bold('ERROR')} while loading select menus`
                 )
             );
-            console.log(error);
+            console.log(e);
             nsole;
         }
     }

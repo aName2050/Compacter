@@ -41,7 +41,7 @@ async function loadButtons(client) {
                 chalk.yellow.bold(`... `),
                 chalk.redBright(`${chalk.bold('ERROR')} while loading buttons`)
             );
-            console.log(error);
+            console.log(e);
         }
     }
 

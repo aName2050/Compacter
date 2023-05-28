@@ -19,17 +19,15 @@ module.exports = {
      */
     async execute(client) {
         client.user.setPresence({
-            activities: [{ name: 'Math 101', type: ActivityType.Listening }],
-            status: 'idle',
+            activities: [{ name: 'you', type: ActivityType.Listening }],
+            status: 'online',
         });
 
         setInterval(() => {
             if (client.user.presence.status == 'idle') return;
             client.user.setPresence({
-                activities: [
-                    { name: 'Math 101', type: ActivityType.Listening },
-                ],
-                status: 'idle',
+                activities: [{ name: 'you', type: ActivityType.Listening }],
+                status: 'online',
             });
         }, 10 * 60000);
 

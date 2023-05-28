@@ -8,7 +8,7 @@ const {
     ButtonBuilder,
     ButtonStyle,
 } = require('discord.js');
-const DB = require('../../Schemas/guildSettings');
+const DB = require('../../../private/mongodb/guildSettings.js');
 
 module.exports = {
     id: 'settings.selectSetting',
@@ -63,7 +63,7 @@ module.exports = {
         const o = interaction.values[0].split('.');
         const option = o[1];
         const optionLabel =
-            interaction.message.components[0].components[0].data.options[o[1]]
+            interaction.message.components[0].components[0].data.options[o[2]]
                 .label;
 
         const embed = new EmbedBuilder()
@@ -81,7 +81,22 @@ module.exports = {
                 .setStyle(ButtonStyle.Danger)
                 .setLabel('Reset')
         );
+        const actionRow3 = new ActionRowBuilder().setComponents(
+            new ButtonBuilder()
+                .setCustomId('manageSubscription')
+                .setStyle(ButtonStyle.Primary)
+                .setLabel('Manage Subscription')
+                .setDisabled(true)
+        );
+        const actionRow4 = new ActionRowBuilder().setComponents(
+            new ButtonBuilder()
+                .setCustomId('hideSettingsMenu')
+                .setStyle(ButtonStyle.Secondary)
+                .setLabel('Hide this menu')
+        );
         const channelEditComponents = [actionRow1, actionRow2];
+        const premiumManageComponets = [actionRow3];
+        const genericComponets = [actionRow4];
         let components = [];
 
         switch (option) {
@@ -120,8 +135,9 @@ module.exports = {
             case 'premium':
                 {
                     embed.setDescription(
-                        `Premium Tier: ${premium}\n\nManage your Compacter Premium subscription`
+                        `Premium Tier: ${premium}\n\nManage your Compacter Premium subscription\n\n*Currently unavailable*`
                     );
+                    components = premiumManageComponets;
                 }
                 break;
             default:
@@ -130,6 +146,7 @@ module.exports = {
                 );
                 break;
         }
+        components.push(genericComponets[0]);
         interaction.reply({ embeds: [embed], components: components });
     },
 };
