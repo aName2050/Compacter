@@ -86,9 +86,20 @@ module.exports = {
                 .setCustomId('manageSubscription')
                 .setStyle(ButtonStyle.Primary)
                 .setLabel('Manage Subscription')
+                .setDisabled(true),
+            new ButtonBuilder()
+                .setStyle(ButtonStyle.Link)
+                .setLabel('Open in your web browser')
+                .setURL(
+                    `https://compacter.gg/guilds/${interaction.guildId}/manage/premium`
+                )
                 .setDisabled(true)
         );
         const actionRow4 = new ActionRowBuilder().setComponents(
+            new ButtonBuilder()
+                .setCustomId('refreshSettingsMenu')
+                .setStyle(ButtonStyle.Secondary)
+                .setLabel('Refresh this setting'),
             new ButtonBuilder()
                 .setCustomId('hideSettingsMenu')
                 .setStyle(ButtonStyle.Secondary)
@@ -127,7 +138,7 @@ module.exports = {
             case 'memberlog':
                 {
                     embed.setDescription(
-                        `${channels.welcomeLeave.log}\n\nSet the channel for member logs and the server rules channel.`
+                        `Log channel: ${channels.memberLogging.channel}\nRules channel: ${channels.memberLogging.rules}\n\nSet the channel for member logs and the server rules channel.`
                     );
                     components = channelEditComponents;
                 }
