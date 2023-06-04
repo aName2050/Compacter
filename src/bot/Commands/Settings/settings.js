@@ -95,7 +95,9 @@ module.exports = {
                 { name: 'Rules Channel', value: channels.memberLogging.rules },
                 { name: 'Premium Tier', value: premium }
             )
-            .setColor('#2b2d31')
+            .setColor(
+                require('../../../../config/colors.json').EMBED_INVIS_SIDEBAR
+            )
             .setFooter({
                 text: 'Select an option from the dropdown below to edit that setting',
             });

@@ -68,7 +68,9 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`${optionLabel}`)
-            .setColor('#2f3136');
+            .setColor(
+                require('../../../../config/colors.json').EMBED_INVIS_SIDEBAR
+            );
         const actionRow1 = new ActionRowBuilder().setComponents(
             new ChannelSelectMenuBuilder()
                 .addChannelTypes(ChannelType.GuildText)
