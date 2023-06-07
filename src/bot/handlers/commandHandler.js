@@ -54,8 +54,10 @@ async function loadCommands(client) {
                     });
             }
 
-            client.commands.set(command.data.name, command);
-            commandsArray.push(command.data.toJSON());
+            if (command.data?.name) {
+                client.commands.set(command.data.name, command);
+                commandsArray.push(command.data.toJSON());
+            }
 
             if (command.inDev) {
                 commands.push({
@@ -68,11 +70,13 @@ async function loadCommands(client) {
             if (command.developer) {
                 commands.push({
                     Command:
-                        command.data.name ?? file.split('/').pop().slice(0, -3),
+                        command.data?.name ??
+                        file.split('/').pop().slice(0, -3),
                     Status: chalk.cyan('██  '),
                 });
                 continue;
             }
+
             if (command.ignoreExecuteCheck) {
                 commands.push({
                     Command:

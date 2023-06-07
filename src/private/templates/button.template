@@ -1,0 +1,17 @@
+const {
+    ButtonInteraction,
+    Client,
+    EmbedBuilder,
+} = require('discord.js');
+
+module.exports = {
+    id: '',
+    /**
+     *
+     * @param {ButtonInteraction} interaction
+     * @param {Client} client
+     */
+    async execute(interaction, client, data) {
+
+    },
+};
