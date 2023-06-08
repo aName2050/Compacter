@@ -2,6 +2,7 @@ const { loadFiles } = require('../../util/helpers/fileLoader.js');
 const { log } = require('../../util/helpers/log.js');
 const chalk = require('chalk');
 const { printTable } = require('console-table-printer');
+const path = require('path');
 
 async function loadSelectMenus(client) {
     const start = Date.now();
@@ -14,26 +15,28 @@ async function loadSelectMenus(client) {
         try {
             const selectMenu = require(file);
 
-            if (!selectMenu.id)
-                menus.push({
-                    SelectMenu: file.split('/').pop().slice(0, -3),
-                    Status: chalk.redBright('██  '),
-                    Error: 'Missing menu ID',
-                });
-            if (!selectMenu.execute)
-                menus.push({
-                    SelectMenu: file.split('/').pop().slice(0, -3),
-                    Status: chalk.redBright('██  '),
-                    Error: 'Missing execute function',
-                });
+            const errors = new Array();
 
-            if (selectMenu.id && selectMenu.execute)
+            if (!selectMenu.id) errors.push('Missing menu ID');
+            if (!selectMenu.execute) errors.push('Missing callback');
+
+            client.selectMenus.set(selectMenu.id, selectMenu);
+
+            if (errors.length > 0) {
+                menus.push({
+                    SelectMenu: path.basename(file),
+                    Status: chalk.redBright('██  '),
+                    Errors: errors.join(', '),
+                });
+            }
+
+            if (!errors.length) {
                 menus.push({
                     SelectMenu: selectMenu.id,
                     Status: chalk.greenBright('██  '),
                 });
-
-            client.selectMenus.set(selectMenu.id, selectMenu);
+                continue;
+            }
         } catch (e) {
             log(
                 chalk.bgMagentaBright.bold(' CLIENT '),

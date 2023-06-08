@@ -16,7 +16,5 @@ module.exports = {
             });
 
         await interaction.message.delete();
-
-        interaction.reply({ content: 'Settings menu hidden', ephemeral: true });
     },
 };

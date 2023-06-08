@@ -2,6 +2,7 @@ const { loadFiles } = require('../../util/helpers/fileLoader.js');
 const { log } = require('../../util/helpers/log.js');
 const chalk = require('chalk');
 const { printTable } = require('console-table-printer');
+const path = require('path');
 
 async function loadCommands(client) {
     const start = Date.now();
@@ -30,7 +31,7 @@ async function loadCommands(client) {
 
             if (!command.data)
                 commands.push({
-                    Command: file.split('/').pop().slice(0, -3),
+                    Command: path.basename(file),
                     Status: chalk.redBright('██  '),
                     Error: 'Missing command data',
                 });
@@ -38,7 +39,7 @@ async function loadCommands(client) {
             if (command.data) {
                 if (!command.data.name)
                     commands.push({
-                        Command: file.split('/').pop().slice(0, -3),
+                        Command: path.basename(file),
                         Status: chalk.redBright('██  '),
                         Error: 'Missing command name',
                     });
@@ -48,7 +49,7 @@ async function loadCommands(client) {
                     !command.message
                 )
                     commands.push({
-                        Command: file.split('/').pop().slice(0, -3),
+                        Command: path.basename(file),
                         Status: chalk.redBright('██  '),
                         Error: 'Missing command description',
                     });
@@ -61,17 +62,14 @@ async function loadCommands(client) {
 
             if (command.inDev) {
                 commands.push({
-                    Command:
-                        command.data.name ?? file.split('/').pop().slice(0, -3),
+                    Command: command.data.name ?? path.basename(file),
                     Status: chalk.rgb(255, 165, 0)('██  '),
                 });
                 continue;
             }
             if (command.developer) {
                 commands.push({
-                    Command:
-                        command.data?.name ??
-                        file.split('/').pop().slice(0, -3),
+                    Command: command.data?.name ?? path.basename(file),
                     Status: chalk.cyan('██  '),
                 });
                 continue;
@@ -79,16 +77,14 @@ async function loadCommands(client) {
 
             if (command.ignoreExecuteCheck) {
                 commands.push({
-                    Command:
-                        command.data.name ?? file.split('/').pop().slice(0, -3),
+                    Command: command.data.name ?? path.basename(file),
                     Status: chalk.magenta('██  '),
                 });
                 continue;
             }
 
             commands.push({
-                Command:
-                    command.data.name ?? file.split('/').pop().slice(0, -3),
+                Command: command.data.name ?? path.basename(file),
                 Status: chalk.greenBright('██  '),
             });
         } catch (error) {

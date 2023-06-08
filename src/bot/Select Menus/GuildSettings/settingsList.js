@@ -73,13 +73,13 @@ module.exports = {
             );
         const actionRow1 = new ActionRowBuilder().setComponents(
             new ChannelSelectMenuBuilder()
-                .addChannelTypes(ChannelType.GuildText)
-                .setPlaceholder('No channel selected')
+                .setChannelTypes(ChannelType.GuildText)
+                .setPlaceholder('Select a channel to log to')
                 .setCustomId('settings.channelMenu')
         );
         const actionRow2 = new ActionRowBuilder().setComponents(
             new ButtonBuilder()
-                .setCustomId(`clearSetting:${option}`)
+                .setCustomId(`resetSetting:${option}`)
                 .setStyle(ButtonStyle.Danger)
                 .setLabel('Reset')
         );
@@ -99,7 +99,7 @@ module.exports = {
         );
         const actionRow4 = new ActionRowBuilder().setComponents(
             new ButtonBuilder()
-                .setCustomId('refreshSettingsMenu')
+                .setCustomId(`refreshSettingsMenu`)
                 .setStyle(ButtonStyle.Secondary)
                 .setLabel('Refresh this setting'),
             new ButtonBuilder()
@@ -107,7 +107,15 @@ module.exports = {
                 .setStyle(ButtonStyle.Secondary)
                 .setLabel('Hide this menu')
         );
+        const actionRow5 = new ActionRowBuilder().setComponents(
+            new ChannelSelectMenuBuilder()
+                .setChannelTypes(ChannelType.GuildText)
+                .setPlaceholder('Select a rules channel')
+                .setCustomId('settings.rulesChannelMenu')
+        );
+
         const channelEditComponents = [actionRow1, actionRow2];
+        const memberLogEditComponets = [actionRow1, actionRow5, actionRow2];
         const premiumManageComponets = [actionRow3];
         const genericComponets = [actionRow4];
         let components = [];
@@ -142,7 +150,7 @@ module.exports = {
                     embed.setDescription(
                         `Log channel: ${channels.memberLogging.channel}\nRules channel: ${channels.memberLogging.rules}\n\nSet the channel for member logs and the server rules channel.`
                     );
-                    components = channelEditComponents;
+                    components = memberLogEditComponets;
                 }
                 break;
             case 'premium':

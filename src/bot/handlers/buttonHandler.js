@@ -2,6 +2,7 @@ const { loadFiles } = require('../../util/helpers/fileLoader.js');
 const { log } = require('../../util/helpers/log.js');
 const chalk = require('chalk');
 const { printTable } = require('console-table-printer');
+const path = require('path');
 
 async function loadButtons(client) {
     const start = Date.now();
@@ -14,26 +15,28 @@ async function loadButtons(client) {
         try {
             const button = require(file);
 
-            if (!button.id)
-                buttons.push({
-                    Button: file.split('/').pop().slice(0, -3),
-                    Status: chalk.redBright('██  '),
-                    Error: 'Missing menu ID',
-                });
-            if (!button.execute)
-                buttons.push({
-                    Button: file.split('/').pop().slice(0, -3),
-                    Status: chalk.redBright('██  '),
-                    Error: 'Missing execute function',
-                });
+            const errors = new Array();
 
-            if (button.id && button.execute)
+            if (!button.id) errors.push('Missing button ID');
+            if (!button.execute) errors.push('Missing callback');
+
+            client.buttons.set(button.id, button);
+
+            if (errors.length > 0) {
+                buttons.push({
+                    Button: path.basename(file),
+                    Status: chalk.redBright('██  '),
+                    Errors: errors.join(', '),
+                });
+            }
+
+            if (!errors.length) {
                 buttons.push({
                     Button: button.id,
                     Status: chalk.greenBright('██  '),
                 });
-
-            client.buttons.set(button.id, button);
+                continue;
+            }
         } catch (e) {
             log(
                 chalk.bgMagentaBright.bold(' CLIENT '),
