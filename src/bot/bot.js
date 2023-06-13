@@ -41,7 +41,8 @@ client.modals = new Collection();
 
 loadEvents(client);
 
-// require('./Handlers/crashHandler')(client);
+require('./Handlers/crashHandler.js')(client);
+
 // ['giveawaysys'].forEach((system) => {
 // 	require(`./Systems/${system}`)(client);
 // });

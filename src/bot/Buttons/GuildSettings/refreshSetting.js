@@ -21,7 +21,7 @@ module.exports = {
         if (interaction.user.id != interaction.guild.ownerId)
             return interaction.reply({
                 content:
-                    '```You must be the owner of the server to edit this setting```',
+                    'You must be the owner of the server to edit this setting',
                 ephemeral: true,
             });
 
@@ -160,7 +160,7 @@ module.exports = {
                 break;
             default:
                 embed.setDescription(
-                    '```A problem occured while fetching this setting```'
+                    'A problem occured while fetching this setting: unknown setting'
                 );
                 break;
         }

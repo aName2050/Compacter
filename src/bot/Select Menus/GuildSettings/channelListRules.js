@@ -14,14 +14,9 @@ module.exports = {
     async execute(interaction, client) {
         if (interaction.user.id != interaction.guild.ownerId)
             return interaction.reply({
-                content:
-                    '```You must be the owner of the guild to edit settings```',
+                content: 'You must be the owner of the guild to edit settings',
                 ephemeral: true,
             });
-
-        const Settings = await DB.findOne({
-            GuildID: interaction.guildId,
-        });
 
         const channel = interaction.values;
         const setting = interaction.message.embeds[0].title;

@@ -19,8 +19,7 @@ module.exports = {
     async execute(interaction, client) {
         if (interaction.user.id != interaction.guild.ownerId)
             return interaction.reply({
-                content:
-                    '```You must be the owner of the guild to edit settings```',
+                content: 'You must be the owner of the guild to edit settings',
                 ephemeral: true,
             });
 
@@ -87,11 +86,11 @@ module.exports = {
             new ButtonBuilder()
                 .setCustomId('manageSubscription')
                 .setStyle(ButtonStyle.Primary)
-                .setLabel('Manage Subscription')
+                .setLabel('Manage')
                 .setDisabled(true),
             new ButtonBuilder()
                 .setStyle(ButtonStyle.Link)
-                .setLabel('Open in your web browser')
+                .setLabel('Manage online')
                 .setURL(
                     `https://compacter.gg/guilds/${interaction.guildId}/manage/premium`
                 )
@@ -163,7 +162,7 @@ module.exports = {
                 break;
             default:
                 embed.setDescription(
-                    '```A problem occured while fetching this setting```'
+                    'A problem occured while fetching this setting: unknown setting'
                 );
                 break;
         }
