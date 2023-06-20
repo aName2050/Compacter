@@ -32,6 +32,12 @@ module.exports = {
             GuildID: interaction.guildId,
         });
 
+        if (!Settings || Settings == null)
+            return interaction.reply({
+                content: 'Failed to fetch settings for this server',
+                ephemeral: true,
+            });
+
         let channels = {
                 msgReport: '*Not set*',
                 msgEvent: '*Not set*',
@@ -53,6 +59,8 @@ module.exports = {
             Settings?.RulesChannel == ''
         )
             resetDisabled = true;
+
+        console.log(Settings, '\n', channels, '\n', premium);
 
         channels = {
             msgReport: Settings?.ReportChannel
@@ -81,7 +89,7 @@ module.exports = {
             .addFields(
                 {
                     name: 'Message Report Logging',
-                    value: channels.msgEvent,
+                    value: channels.msgReport,
                 },
                 { name: 'Message Event Logging', value: channels.msgEvent },
                 {

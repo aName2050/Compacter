@@ -103,6 +103,6 @@ module.exports = {
                 break;
         }
 
-        interaction.reply({ content: [embed], ephemeral: true });
+        interaction.reply({ embeds: [embed], ephemeral: true });
     },
 };

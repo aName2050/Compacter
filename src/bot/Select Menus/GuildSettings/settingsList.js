@@ -27,6 +27,12 @@ module.exports = {
             GuildID: interaction.guildId,
         });
 
+        if (!Settings || Settings == null)
+            return interaction.reply({
+                content: 'Failed to fetch settings for this server',
+                ephemeral: true,
+            });
+
         let channels = {
                 msgReport: '*Not set*',
                 msgEvent: '*Not set*',

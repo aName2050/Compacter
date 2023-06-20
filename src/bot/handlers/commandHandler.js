@@ -63,7 +63,7 @@ async function loadCommands(client) {
             if (command.inDev) {
                 commands.push({
                     Command: command.data.name ?? path.basename(file),
-                    Status: chalk.rgb(255, 165, 0)('██  '),
+                    Status: chalk.yellow('██  '),
                 });
                 continue;
             }

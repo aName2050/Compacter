@@ -3,44 +3,50 @@ Commands
 [] = required
 {} = optional
 
+❌ not going to add in Compacter 3
+✅ added in Compacter 3
+👨‍💻 going to add in Compacter 3
+❓ unsure if going to add to Compacter 3
+🔄️ in-progress
+
 FUN:
-say - Send an anonymous message through the bot [message] {channel}
-meme - Get a random meme or generate one 
-advice - Get the perfect bit of life advice 
-giveaway - Manage giveaways 
+say - Send an anonymous message through the bot [message] {channel} 👨‍💻🔄️
+meme - Get a random meme or generate one 👨‍💻
+advice - Get the perfect bit of life advice 👨‍💻
+giveaway - Manage giveaways 👨‍💻
 -> start - Start a giveaway [length] [winners] [prize] {channel}
 -> actions - Manage a giveaway [action] [giveaway_message_id]
 
 INFO (-> UTILITIES):
-serverinfo - Get server information 
-status - Get the status of the bot and bot details 
-User Info - Get user information (user profile context command)
+serverinfo - Get server information 👨‍💻
+status - Get the status of the bot and bot details 👨‍💻
+User Info - Get user information (user profile context command) 👨‍💻
 
 MATH (-> FUN):
-binary - Convert a number to and from binary [function] [number]
-solve - Solve an algebraic equation [equation] [variable]
-arithmetic - Do arithmetic operations on two numbers 
+binary - Convert a number to and from binary [function] [number] ❓
+solve - Solve an algebraic equation [equation] [variable] ❓
+arithmetic - Do arithmetic operations on two numbers ❌
 -> add - Add two numbers [first_number] [second_number]
 -> subtract - Subtract two numbers [first_number] [second_number]
 -> divide - Divide two numbers [first_number] [second_number]
 -> multiply - Multiply two numbers [first_number] [second_number]
 
 MODERATION:
-ban - Ban a user [user] [reason]
-clear - Delete a certain amount of messages in a channel or from a user [amount] [reason] {user}
-infractions - View the infractions of a user [user]
-kick - Kick a user [user] [reason]
-Report Message - Report a message (message context command)
-timeout - Timeout a user [user] [duration] [reason]
-warn - Warn a user [user] [reason]
+ban - Ban a user [user] [reason] 👨‍💻
+clear - Delete a certain amount of messages in a channel or from a user [amount] [reason] {user} 👨‍💻
+infractions - View the infractions of a user [user] 👨‍💻
+kick - Kick a user [user] [reason] 👨‍💻
+Report Message - Report a message (message context command) 👨‍💻
+timeout - Timeout a user [user] [duration] [reason] 👨‍💻
+warn - Warn a user [user] [reason] 👨‍💻
 
 SETTINGS (-> UTILITIES):
-settings - Edit and view settings for your server
+settings - Edit and view settings for your server ✅
 
 UTILITIES:
-debug - Run a diagnostic check on the bot
-ping - Ping the bot
-suggest - Make a suggestion [suggestion] [reason]
-translate - Translate text [text] [language] {fromLanguage}
+debug - Run a diagnostic check on the bot 👨‍💻
+ping - Ping the bot 👨‍💻
+suggest - Make a suggestion [suggestion] [reason] 👨‍💻
+translate - Translate text [text] [language] {fromLanguage} 👨‍💻
 
 PREMIUM:

@@ -25,7 +25,8 @@ module.exports = {
                     { name: 'guildMemberAdd', value: 'guildMemberAdd' },
                     { name: 'guildMemberRemove', value: 'guildMemberRemove' },
                     { name: 'guildCreate', value: 'guildCreate' },
-                    { name: 'guildDelete', value: 'guildDelete' }
+                    { name: 'guildDelete', value: 'guildDelete' },
+                    { name: 'error', value: 'error' }
                 )
         )
         .setDMPermission(false),
@@ -62,7 +63,15 @@ module.exports = {
                     reply(interaction);
                 }
                 break;
-
+            case 'error':
+                {
+                    client.emit(Events.Error, new Error('test error'));
+                    process.emitWarning('test warning');
+                    Promise.reject(new Error('unhandledRejection test error'));
+                    uncaughtExceptionErrorTest();
+                    reply(interaction);
+                }
+                break;
             default:
                 interaction.reply({
                     content: 'Invalid option',

@@ -18,6 +18,21 @@ module.exports = client => {
     });
     let embeds = [new EmbedBuilder().setColor(colors.ERROR)];
 
+    const createErrorMessageEmbed = (title, description) => {
+        return new EmbedBuilder()
+            .setColor(colors.ERROR)
+            .setTitle(title)
+            .setDescription(`\`\`\`${description.slice(0, 1000)}\`\`\``)
+            .setTimestamp();
+    };
+
+    const sendWebhookMessage = (content, embeds) => {
+        return webhook.send({
+            content,
+            embeds,
+        });
+    };
+
     // Discord API / Bot client error
     client.on('error', err => {
         embeds = [new EmbedBuilder().setColor(colors.ERROR)];
@@ -25,7 +40,7 @@ module.exports = client => {
             chalk.bgCyan.bold(' SERVER '),
             true,
             chalk.yellow.bold('... '),
-            chalk.blue('Bot Client/Discord API Error')
+            chalk.redBright('Bot Client/Discord API Error')
         );
         console.log(err);
 
@@ -35,10 +50,7 @@ module.exports = client => {
             )
             .setTimestamp();
 
-        return webhook.send({
-            content: '# Bot Client/Discord API Error',
-            embeds: embeds,
-        });
+        return sendWebhookMessage('# Bot Client/Discord API Error', embeds);
     });
 
     // NodeJS Error: unhandledRejection
@@ -52,11 +64,10 @@ module.exports = client => {
         );
         console.log(reason, promise);
 
-        embeds[0]
-            .setTitle('Reason')
-            .setDescription(
-                `\`\`\`${inspect(reason, { depth: 0 }).slice(0, 1000)}\`\`\``
-            );
+        embeds[0] = createErrorMessageEmbed(
+            'Reason',
+            inspect(reason, { depth: 0 })
+        );
         embeds.push(
             new EmbedBuilder()
                 .setColor(colors.ERROR)
@@ -70,10 +81,7 @@ module.exports = client => {
                 .setTimestamp()
         );
 
-        return webhook.send({
-            content: '# Unhandled Rejection',
-            embeds: embeds,
-        });
+        return sendWebhookMessage('# Unhandled Rejection', embeds);
     });
 
     // NodeJS Error: uncaughtException
@@ -87,11 +95,10 @@ module.exports = client => {
         );
         console.log(err, origin);
 
-        embeds[0]
-            .setTitle('Error')
-            .setDescription(
-                `\`\`\`${inspect(err, { depth: 0 }).slice(0, 1000)}\`\`\``
-            );
+        embeds[0] = createErrorMessageEmbed(
+            'Error',
+            inspect(err, { depth: 0 })
+        );
         embeds.push(
             new EmbedBuilder()
                 .setTitle('Origin')
@@ -100,10 +107,7 @@ module.exports = client => {
                 .setTimestamp()
         );
 
-        return webhook.send({
-            content: '# Uncaught Exception',
-            embeds: embeds,
-        });
+        return sendWebhookMessage('# Uncaught Exception', embeds);
     });
 
     // NodeJS Error: uncaughtExceptionMonitor
@@ -117,11 +121,10 @@ module.exports = client => {
         );
         console.log(err, origin);
 
-        embeds[0]
-            .setTitle('Error')
-            .setDescription(
-                `\`\`\`${inspect(err, { depth: 0 }).slice(0, 1000)}\`\`\``
-            );
+        embeds[0] = createErrorMessageEmbed(
+            'Error',
+            inspect(err, { depth: 0 })
+        );
         embeds.push(
             new EmbedBuilder()
                 .setTitle('Origin')
@@ -130,10 +133,7 @@ module.exports = client => {
                 .setTimestamp()
         );
 
-        return webhook.send({
-            content: '# Uncaught Exception Monitor',
-            embeds: embeds,
-        });
+        return sendWebhookMessage('# Uncaught Exception Monitor', embeds);
     });
 
     // NodeJS Error: warning
@@ -153,9 +153,6 @@ module.exports = client => {
             )
             .setTimestamp();
 
-        return webhook.send({
-            content: '# Warning',
-            embeds: embeds,
-        });
+        return sendWebhookMessage('# Warning', embeds);
     });
 };
