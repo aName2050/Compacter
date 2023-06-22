@@ -16,6 +16,7 @@ module.exports = {
   data: new SlashCommandBuilder()
   .setName("")
   .setDescription("")
+  .setDefaultMemberPermissions()
   .setDMPermission(false)
   ,
   /**

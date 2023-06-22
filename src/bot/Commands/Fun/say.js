@@ -11,8 +11,8 @@ module.exports = {
     context: false,
     message: false,
     ignoreExecuteCheck: false,
-    inDev: true,
-    disabled: true,
+    inDev: false,
+    disabled: false,
     requiredBotPermissions: [PermissionFlagsBits.SendMessages],
     data: new SlashCommandBuilder()
         .setName('say')
@@ -37,17 +37,21 @@ module.exports = {
                 content: 'Failed to send message: no message given',
             });
 
-        const filter = new Filter({ list: true });
+        const filter = new Filter();
 
         if (filter.isProfane(msg)) {
-            const profaneWords = msg
-                .split(' ')
-                .filter(word => filter.isProfane(word));
-            const profanityFound = profaneWords.join(', ');
+            const words = msg.split(' ');
+            const profaneWords = new Array();
+            words.forEach(w => {
+                if (filter.isProfane(w)) profaneWords.push(w);
+                else return;
+            });
+            const profanityFound = '- ' + profaneWords.join('\n- ');
+
             console.log(profanityFound);
 
             return interaction.reply({
-                content: `Please do not use profane language with this command.\n## Violating words\n\n**${profanityFound}**`,
+                content: `Please do not use profane language with this command.\n## Violating words\n\n${profanityFound}`,
                 ephemeral: true,
             });
         }
