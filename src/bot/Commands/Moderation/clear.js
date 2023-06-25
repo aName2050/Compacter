@@ -6,7 +6,6 @@ const {
 } = require('discord.js');
 const DiscordTranscripts = require('discord-html-transcripts');
 const guildSettings = require('../../../private/mongodb/guildSettings.js');
-const infractionsModel = require('../../../private/mongodb/infractionsModel.js');
 const colors = require('../../../../config/colors.json');
 
 module.exports = {
