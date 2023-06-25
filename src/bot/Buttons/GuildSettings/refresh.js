@@ -45,14 +45,14 @@ module.exports = {
             },
             premium = 'Free';
 
-        let resetDisabled;
+        let resetDisabled = false;
 
         if (
-            Settings?.ReportChannel == '' &&
-            Settings?.MsgEventChannel == '' &&
-            Settings?.ModActionChannel == '' &&
-            Settings?.MemberLogChannel == '' &&
-            Settings?.RulesChannel == ''
+            !Settings.ReportChannel &&
+            !Settings.MsgEventChannel &&
+            !Settings.ModActionChannel &&
+            !Settings.MemberLogChannel &&
+            !Settings.RulesChannel
         )
             resetDisabled = true;
 

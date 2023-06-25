@@ -49,18 +49,16 @@ module.exports = {
             },
             premium = 'Free';
 
-        let resetDisabled;
+        let resetDisabled = false;
 
         if (
-            Settings?.ReportChannel == '' &&
-            Settings?.MsgEventChannel == '' &&
-            Settings?.ModActionChannel == '' &&
-            Settings?.MemberLogChannel == '' &&
-            Settings?.RulesChannel == ''
+            !Settings.ReportChannel &&
+            !Settings.MsgEventChannel &&
+            !Settings.ModActionChannel &&
+            !Settings.MemberLogChannel &&
+            !Settings.RulesChannel
         )
             resetDisabled = true;
-
-        console.log(Settings, '\n', channels, '\n', premium);
 
         channels = {
             msgReport: Settings?.ReportChannel

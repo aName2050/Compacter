@@ -117,7 +117,7 @@ module.exports = client => {
             chalk.bgCyan.bold(' SERVER '),
             true,
             chalk.yellow.bold('... '),
-            chalk.redBright('Uncaught Exception')
+            chalk.redBright('Uncaught Exception Monitor')
         );
         console.log(err, origin);
 
@@ -138,6 +138,8 @@ module.exports = client => {
 
     // NodeJS Error: warning
     process.on('warning', warn => {
+        if (warn.name.includes('ExperimentalWarning')) return null;
+
         embeds = [new EmbedBuilder().setColor(colors.WARNING)];
         log(
             chalk.bgCyan.bold(' SERVER '),

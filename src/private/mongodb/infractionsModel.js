@@ -4,7 +4,14 @@ module.exports = model(
     'infractions',
     new Schema({
         UserID: String,
-        Infractions: [{ GuildID: String, ModeratorID: String, Reason: String }],
+        Infractions: [
+            {
+                GuildID: String,
+                ModeratorID: String,
+                Type: String,
+                Reason: String,
+            },
+        ],
     }),
     'infractions'
 );

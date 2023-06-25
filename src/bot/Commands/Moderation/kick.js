@@ -17,25 +17,25 @@ module.exports = {
     inDev: false,
     disabled: false,
     requiredBotPermissions: [
-        PermissionFlagsBits.BanMembers,
+        PermissionFlagsBits.KickMembers,
         PermissionFlagsBits.SendMessages,
     ],
     data: new SlashCommandBuilder()
-        .setName('ban')
-        .setDescription('Ban a user')
+        .setName('kick')
+        .setDescription('Kick a user')
         .addUserOption(option =>
             option
                 .setName('user')
-                .setDescription('The user to ban')
+                .setDescription('The user to kick')
                 .setRequired(true)
         )
         .addStringOption(option =>
             option
                 .setName('reason')
-                .setDescription('The reason you are banning this user')
+                .setDescription('The reason you are kicking this user')
                 .setRequired(true)
         )
-        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
+        .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
         .setDMPermission(false),
     /**
      *
@@ -49,10 +49,10 @@ module.exports = {
         const reason = options.getString('reason');
 
         const log = new EmbedBuilder()
-            .setTitle('User Banned')
+            .setTitle('User Kicked')
             .setColor(EMBED_INVIS_SIDEBAR)
             .setDescription(
-                `<@${user.id}> banned by <@${interaction.user.id}>\n\n**Reason**\n${reason}`
+                `<@${user.id}> kicked by <@${interaction.user.id}>\n\n**Reason**\n${reason}`
             );
 
         const userInfractions = await InfractionsModel.findOne({
@@ -65,7 +65,7 @@ module.exports = {
                     {
                         GuildID: guild.id,
                         ModeratorID: interaction.user.id,
-                        Type: 'Server Ban',
+                        Type: 'Server Kick',
                         Reason: reason,
                     },
                 ],
@@ -76,7 +76,7 @@ module.exports = {
                 $push: {
                     GuildID: guild.id,
                     ModeratorID: interaction.user.id,
-                    Type: 'Server Ban',
+                    Type: 'Server Kick',
                     Reason: reason,
                 },
             });
@@ -84,7 +84,7 @@ module.exports = {
         const userEmbed = new EmbedBuilder()
             .setColor(EMBED_INVIS_SIDEBAR)
             .setDescription(
-                `You have been banned from **${guild.name}** by <@${interaction.user.id}>.\n\n**Reason**\n${reason}`
+                `You have been kicked from **${guild.name}** by <@${interaction.user.id}>.\n\n**Reason**\n${reason}`
             );
         await user.send({ embeds: [userEmbed] });
 
@@ -95,10 +95,10 @@ module.exports = {
         )
             return interaction.reply({
                 content:
-                    'Failed to ban this member: user has higher role than bot',
+                    'Failed to kick this member: user has higher role than bot',
                 ephemeral: true,
             });
-        await member.ban({ deleteMessageSeconds: null, reason: reason });
+        await member.kick(reason);
 
         const settings = await GuildSettings.findOne({ GuildID: guild.id });
         settings
