@@ -58,30 +58,36 @@ module.exports = {
         const userInfractions = await InfractionsModel.findOne({
             UserID: user.id,
         });
-        if (!userInfractions)
+        const infraction = {
+            Timestamp: Date.now(),
+            GuildID: guild.id,
+            ModeratorID: interaction.user.id,
+            Type: 'Server Kick',
+            Reason: reason,
+        };
+        if (userInfractions) {
+            if (userInfractions.Infractions != '') {
+                // const tmp1 = JSON.parse(userInfractions.Infractions);
+                // const tmp2 = tmp1.push(infraction);
+                // const tmp3 = JSON.stringify(tmp2);
+                const tmp1 = JSON.parse(userInfractions.Infractions);
+                tmp1.push(infraction);
+                const tmp2 = JSON.stringify(tmp1);
+                await userInfractions.updateOne({
+                    Infractions: tmp2,
+                });
+            } else {
+                await userInfractions.updateOne({
+                    Infractions: JSON.stringify([infraction]),
+                });
+            }
+        }
+        if (!userInfractions || !userInfractions.Infractions) {
             await InfractionsModel.create({
                 UserID: user.id,
-                Infractions: [
-                    {
-                        Timestamp: Date.now(),
-                        GuildID: guild.id,
-                        ModeratorID: interaction.user.id,
-                        Type: 'Server Kick',
-                        Reason: reason,
-                    },
-                ],
+                Infractions: JSON.stringify([infraction]),
             });
-
-        if (userInfractions)
-            await userInfractions.updateOne({
-                $push: {
-                    Timestamp: Date.now(),
-                    GuildID: guild.id,
-                    ModeratorID: interaction.user.id,
-                    Type: 'Server Kick',
-                    Reason: reason,
-                },
-            });
+        }
 
         const userEmbed = new EmbedBuilder()
             .setColor(EMBED_INVIS_SIDEBAR)

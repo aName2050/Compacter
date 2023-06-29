@@ -8,6 +8,7 @@ const {
 const GuildSettings = require('../../../private/mongodb/guildSettings.js');
 const InfractionsModel = require('../../../private/mongodb/infractionsModel.js');
 const { EMBED_INVIS_SIDEBAR } = require('../../../../config/colors.json');
+const ms = require('ms');
 
 module.exports = {
     developer: false,
@@ -17,25 +18,41 @@ module.exports = {
     inDev: false,
     disabled: false,
     requiredBotPermissions: [
-        PermissionFlagsBits.BanMembers,
+        PermissionFlagsBits.ModerateMembers,
         PermissionFlagsBits.SendMessages,
     ],
     data: new SlashCommandBuilder()
-        .setName('ban')
-        .setDescription('Ban a user')
+        .setName('timeout')
+        .setDescription('Timeout a user')
         .addUserOption(option =>
             option
                 .setName('user')
-                .setDescription('The user to ban')
+                .setDescription('The user to timeout')
                 .setRequired(true)
         )
         .addStringOption(option =>
             option
                 .setName('reason')
-                .setDescription('The reason you are banning this user')
+                .setDescription('The reason you are timing out this user')
                 .setRequired(true)
         )
-        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
+        .addStringOption(option =>
+            option
+                .setName('length')
+                .setDescription(
+                    'The length of time this user should be timed out for'
+                )
+                .setChoices(
+                    { name: '60 seconds', value: '60s' },
+                    { name: '5 minutes', value: '5m' },
+                    { name: '10 minutes', value: '10m' },
+                    { name: '1 hour', value: '1h' },
+                    { name: '1 day', value: '1d' },
+                    { name: '1 week', value: '1w' }
+                )
+                .setRequired(true)
+        )
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
         .setDMPermission(false),
     /**
      *
@@ -47,12 +64,15 @@ module.exports = {
 
         const user = options.getUser('user');
         const reason = options.getString('reason');
+        const length = ms(options.getString('length'));
 
         const log = new EmbedBuilder()
-            .setTitle('User Banned')
+            .setTitle('User Timed Out')
             .setColor(EMBED_INVIS_SIDEBAR)
             .setDescription(
-                `<@${user.id}> banned by <@${interaction.user.id}>\n\n**Reason**\n${reason}`
+                `<@${user.id}> timed out for ${ms(length)} by <@${
+                    interaction.user.id
+                }>\n\n**Reason**\n${reason}`
             );
 
         const userInfractions = await InfractionsModel.findOne({
@@ -62,14 +82,11 @@ module.exports = {
             Timestamp: Date.now(),
             GuildID: guild.id,
             ModeratorID: interaction.user.id,
-            Type: 'Server Ban',
+            Type: 'Server Timeout',
             Reason: reason,
         };
         if (userInfractions) {
             if (userInfractions.Infractions != '') {
-                // const tmp1 = JSON.parse(userInfractions.Infractions);
-                // const tmp2 = tmp1.push(infraction);
-                // const tmp3 = JSON.stringify(tmp2);
                 const tmp1 = JSON.parse(userInfractions.Infractions);
                 tmp1.push(infraction);
                 const tmp2 = JSON.stringify(tmp1);
@@ -92,7 +109,9 @@ module.exports = {
         const userEmbed = new EmbedBuilder()
             .setColor(EMBED_INVIS_SIDEBAR)
             .setDescription(
-                `You have been banned from **${guild.name}** by <@${interaction.user.id}>.\n\n**Reason**\n${reason}`
+                `You have been timed out in **${guild.name}** for ${ms(
+                    length
+                )} by <@${interaction.user.id}>.\n\n**Reason**\n${reason}`
             );
         await user.send({ embeds: [userEmbed] });
 
@@ -103,10 +122,10 @@ module.exports = {
         )
             return interaction.reply({
                 content:
-                    'Failed to ban this member: user has higher role than bot',
+                    'Failed to timeout this member: user has higher role than bot',
                 ephemeral: true,
             });
-        await member.ban({ deleteMessageSeconds: null, reason: reason });
+        await member.timeout(length, reason);
 
         const settings = await GuildSettings.findOne({ GuildID: guild.id });
         settings

@@ -14,8 +14,8 @@ module.exports = {
     context: false,
     message: false,
     ignoreExecuteCheck: false,
-    inDev: true,
-    disabled: true,
+    inDev: false,
+    disabled: false,
     requiredBotPermissions: [PermissionFlagsBits.SendMessages],
     data: new SlashCommandBuilder()
         .setName('warn')
@@ -55,33 +55,33 @@ module.exports = {
         const userInfractions = await InfractionsModel.findOne({
             UserID: user.id,
         });
-        console.log(userInfractions);
-        if (!userInfractions)
+        const infraction = {
+            Timestamp: Date.now(),
+            GuildID: guild.id,
+            ModeratorID: interaction.user.id,
+            Type: 'Warning',
+            Reason: reason,
+        };
+        if (userInfractions) {
+            if (userInfractions.Infractions != '') {
+                const tmp1 = JSON.parse(userInfractions.Infractions);
+                tmp1.push(infraction);
+                const tmp2 = JSON.stringify(tmp1);
+                await userInfractions.updateOne({
+                    Infractions: tmp2,
+                });
+            } else {
+                await userInfractions.updateOne({
+                    Infractions: JSON.stringify([infraction]),
+                });
+            }
+        }
+        if (!userInfractions || !userInfractions.Infractions) {
             await InfractionsModel.create({
                 UserID: user.id,
-                Infractions: [
-                    {
-                        Timestamp: Date.now(),
-                        GuildID: guild.id,
-                        ModeratorID: interaction.user.id,
-                        Type: 'Warning',
-                        Reason: reason,
-                    },
-                ],
+                Infractions: JSON.stringify([infraction]),
             });
-
-        if (userInfractions)
-            await userInfractions.updateOne({
-                $push: {
-                    Timestamp: Date.now(),
-                    GuildID: guild.id,
-                    ModeratorID: interaction.user.id,
-                    Type: 'Warning',
-                    Reason: reason,
-                },
-            });
-
-        console.log(userInfractions);
+        }
 
         const userEmbed = new EmbedBuilder()
             .setColor(EMBED_INVIS_SIDEBAR)

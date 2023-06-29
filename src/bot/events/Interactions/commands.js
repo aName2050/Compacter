@@ -1,8 +1,11 @@
+// TODO: finish
+
 const {
     CommandInteraction,
     Events,
     Client,
     PermissionFlagsBits,
+    PermissionsBitField,
 } = require('discord.js');
 
 module.exports = {
@@ -36,16 +39,32 @@ module.exports = {
                 });
 
             if (command.requiredBotPermissions) {
-                const perms = BigInt(command.requiredBotPermissions.join(''));
-                if (
-                    !interaction.guild.members.me.permissions.has(perms) ||
-                    !interaction.guild.members.me.permissions.has(
-                        PermissionFlagsBits.ViewChannel
+                const missingPerms = new Array();
+                const perms = new PermissionsBitField(
+                    command.requiredBotPermissions
+                );
+                command.requiredBotPermissions.forEach(rp => {
+                    if (
+                        !interaction.guild.members.me.permissions.has(
+                            PermissionFlagsBits.ViewChannel
+                        )
                     )
-                )
+                        missingPerms.push('ViewChannel');
+                    if (!interaction.guild.members.me.permissions.has(rp))
+                        missingPerms.push(Object.keys(rp)[0]);
+
+                    console.log(
+                        rp,
+                        ' : ',
+                        Object.keys(rp)[0],
+                        ' => ',
+                        interaction.guild.members.me.permissions.has(rp)
+                    );
+                });
+                if (missingPerms.length > 0)
                     return interaction.reply({
-                        content: `\`\`\`apache\nERROR: The bot is missing the following permissions required to run this command:\n${command.requiredBotPermissions.join(
-                            '\n'
+                        content: `\`\`\`apache\nERROR: The bot is missing the following permissions required to run this command:\n- ${command.requiredBotPermissions.join(
+                            '\n- '
                         )}\`\`\``,
                         ephemeral: true,
                     });
