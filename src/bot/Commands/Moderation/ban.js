@@ -63,6 +63,7 @@ module.exports = {
                 UserID: user.id,
                 Infractions: [
                     {
+                        Timestamp: Date.now(),
                         GuildID: guild.id,
                         ModeratorID: interaction.user.id,
                         Type: 'Server Ban',
@@ -74,10 +75,11 @@ module.exports = {
         if (userInfractions)
             await userInfractions.updateOne({
                 $push: {
+                    Timestamp: Date.now().toString(),
                     GuildID: guild.id,
                     ModeratorID: interaction.user.id,
                     Type: 'Server Ban',
-                    Reason: reason,
+                    Reason: reason.toString(),
                 },
             });
 

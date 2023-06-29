@@ -14,28 +14,25 @@ module.exports = {
     context: false,
     message: false,
     ignoreExecuteCheck: false,
-    inDev: false,
-    disabled: false,
-    requiredBotPermissions: [
-        PermissionFlagsBits.KickMembers,
-        PermissionFlagsBits.SendMessages,
-    ],
+    inDev: true,
+    disabled: true,
+    requiredBotPermissions: [PermissionFlagsBits.SendMessages],
     data: new SlashCommandBuilder()
-        .setName('kick')
-        .setDescription('Kick a user')
+        .setName('warn')
+        .setDescription('Warn a user')
         .addUserOption(option =>
             option
                 .setName('user')
-                .setDescription('The user to kick')
+                .setDescription('The user to warn')
                 .setRequired(true)
         )
         .addStringOption(option =>
             option
                 .setName('reason')
-                .setDescription('The reason you are kicking this user')
+                .setDescription('The reason you are warning this user')
                 .setRequired(true)
         )
-        .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
         .setDMPermission(false),
     /**
      *
@@ -49,15 +46,16 @@ module.exports = {
         const reason = options.getString('reason');
 
         const log = new EmbedBuilder()
-            .setTitle('User Kicked')
+            .setTitle('User Warned')
             .setColor(EMBED_INVIS_SIDEBAR)
             .setDescription(
-                `<@${user.id}> kicked by <@${interaction.user.id}>\n\n**Reason**\n${reason}`
+                `<@${user.id}> warned by <@${interaction.user.id}>\n\n**Reason**\n${reason}`
             );
 
         const userInfractions = await InfractionsModel.findOne({
             UserID: user.id,
         });
+        console.log(userInfractions);
         if (!userInfractions)
             await InfractionsModel.create({
                 UserID: user.id,
@@ -66,7 +64,7 @@ module.exports = {
                         Timestamp: Date.now(),
                         GuildID: guild.id,
                         ModeratorID: interaction.user.id,
-                        Type: 'Server Kick',
+                        Type: 'Warning',
                         Reason: reason,
                     },
                 ],
@@ -78,29 +76,19 @@ module.exports = {
                     Timestamp: Date.now(),
                     GuildID: guild.id,
                     ModeratorID: interaction.user.id,
-                    Type: 'Server Kick',
+                    Type: 'Warning',
                     Reason: reason,
                 },
             });
 
+        console.log(userInfractions);
+
         const userEmbed = new EmbedBuilder()
             .setColor(EMBED_INVIS_SIDEBAR)
             .setDescription(
-                `You have been kicked from **${guild.name}** by <@${interaction.user.id}>.\n\n**Reason**\n${reason}`
+                `You have been warned in **${guild.name}** by <@${interaction.user.id}>.\n\n**Reason**\n${reason}`
             );
         await user.send({ embeds: [userEmbed] });
-
-        const member = guild.members.cache.get(user.id);
-        if (
-            interaction.guild.roles.botRoleFor(client.user).position <
-            guild.members.cache.get(user.id).roles.highest.position
-        )
-            return interaction.reply({
-                content:
-                    'Failed to kick this member: user has higher role than bot',
-                ephemeral: true,
-            });
-        await member.kick(reason);
 
         const settings = await GuildSettings.findOne({ GuildID: guild.id });
         settings

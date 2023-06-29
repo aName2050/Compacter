@@ -13,7 +13,7 @@ module.exports = {
     context: false,
     message: false,
     ignoreExecuteCheck: false,
-    inDev: true,
+    inDev: false,
     disabled: false,
     requiredBotPermissions: [
         PermissionFlagsBits.ManageMessages,
@@ -97,12 +97,13 @@ module.exports = {
                 interaction.reply({
                     embeds: [
                         embed.setDescription(
-                            `Cleared \`${messages.size}\` messages from ${User}`
+                            `Cleared \`${messages.size}\` message(s) from ${User}`
                         ),
                     ],
                     ephemeral: true,
                 });
                 logDesc.push(`Messages Cleared: ${messages.size}`);
+                logDesc.push('**Transcript attached above**');
                 logChannel?.send({
                     embeds: [log.setDescription(logDesc.join('\n'))],
                     files: [transcript],
@@ -118,12 +119,13 @@ module.exports = {
                 interaction.reply({
                     embeds: [
                         embed.setDescription(
-                            `Cleared \`${messages.size}\` messages`
+                            `Cleared \`${messages.size}\` message(s)`
                         ),
                     ],
                     ephemeral: true,
                 });
                 logDesc.push(`Messages Cleared: ${messages.size}`);
+                logDesc.push('**Transcript attached above**');
                 logChannel?.send({
                     embeds: [log.setDescription(logDesc.join('\n'))],
                     files: [transcript],

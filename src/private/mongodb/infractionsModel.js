@@ -6,6 +6,7 @@ module.exports = model(
         UserID: String,
         Infractions: [
             {
+                Timestamp: String,
                 GuildID: String,
                 ModeratorID: String,
                 Type: String,
