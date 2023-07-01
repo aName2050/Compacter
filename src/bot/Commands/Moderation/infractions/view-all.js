@@ -5,7 +5,7 @@ const {
 } = require('discord.js');
 
 module.exports = {
-    subCommand: 'cmd.sub',
+    subCommand: 'infractions.view-all',
     /**
      *
      * @param {ChatInputCommandInteraction} interaction

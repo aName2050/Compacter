@@ -1,5 +1,3 @@
-// TODO: finish
-
 const {
     CommandInteraction,
     Events,
@@ -40,32 +38,36 @@ module.exports = {
 
             if (command.requiredBotPermissions) {
                 const missingPerms = new Array();
-                const perms = new PermissionsBitField(
-                    command.requiredBotPermissions
-                );
-                command.requiredBotPermissions.forEach(rp => {
-                    if (
-                        !interaction.guild.members.me.permissions.has(
-                            PermissionFlagsBits.ViewChannel
-                        )
-                    )
-                        missingPerms.push('ViewChannel');
-                    if (!interaction.guild.members.me.permissions.has(rp))
-                        missingPerms.push(Object.keys(rp)[0]);
 
-                    console.log(
-                        rp,
-                        ' : ',
-                        Object.keys(rp)[0],
-                        ' => ',
-                        interaction.guild.members.me.permissions.has(rp)
+                const channelPerms = interaction.guild.channels.cache
+                    .get(interaction.channel.id)
+                    .permissionsFor(
+                        interaction.guild.roles.botRoleFor(client.user)
                     );
+
+                command.requiredBotPermissions.forEach(p => {
+                    if (
+                        !interaction.guild.roles
+                            .botRoleFor(client.user)
+                            .permissions.has(p, false) &&
+                        !channelPerms.has(p, false)
+                    ) {
+                        missingPerms.push(convertBigIntToPermissionFlag(p));
+                    }
                 });
+
+                // Function to convert the BigInt permission flag to its object notation
+                function convertBigIntToPermissionFlag(flag) {
+                    return Object.keys(PermissionFlagsBits).find(
+                        key => PermissionFlagsBits[key] === flag
+                    );
+                }
+
                 if (missingPerms.length > 0)
                     return interaction.reply({
-                        content: `\`\`\`apache\nERROR: The bot is missing the following permissions required to run this command:\n- ${command.requiredBotPermissions.join(
+                        content: `The bot is missing the following permissions required to run this command:\n- ${missingPerms.join(
                             '\n- '
-                        )}\`\`\``,
+                        )}`,
                         ephemeral: true,
                     });
             }
