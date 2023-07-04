@@ -46,7 +46,7 @@ async function loadEvents(client) {
                 chalk.bgMagentaBright.bold(' CLIENT '),
                 true,
                 chalk.yellow.bold(`... `),
-                chalk.redBright(`${chalk.bold('ERROR')} while loading events`)
+                chalk.redBright(`ERROR while loading events`)
             );
             console.log(error);
         }

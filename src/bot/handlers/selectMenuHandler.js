@@ -42,9 +42,7 @@ async function loadSelectMenus(client) {
                 chalk.bgMagentaBright.bold(' CLIENT '),
                 true,
                 chalk.yellow.bold(`... `),
-                chalk.redBright(
-                    `${chalk.bold('ERROR')} while loading select menus`
-                )
+                chalk.redBright(`ERROR while loading select menus`)
             );
             console.log(e);
             nsole;

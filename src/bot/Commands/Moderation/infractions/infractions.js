@@ -54,7 +54,15 @@ module.exports = {
                     option
                         .setName('user')
                         .setDescription(
-                            'The user you want to clear the infractions of'
+                            'The user you want to remove the infraction for'
+                        )
+                        .setRequired(true)
+                )
+                .addStringOption(option =>
+                    option
+                        .setName('id')
+                        .setDescription(
+                            'The infraction ID, required to find and delete the infraction'
                         )
                         .setRequired(true)
                 )

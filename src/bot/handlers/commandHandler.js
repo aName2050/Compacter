@@ -92,7 +92,7 @@ async function loadCommands(client) {
                 chalk.bgMagentaBright.bold(' CLIENT '),
                 true,
                 chalk.yellow.bold(`... `),
-                chalk.redBright(`${chalk.bold('ERROR')} while loading commands`)
+                chalk.redBright(`ERROR while loading commands`)
             );
             console.log(error);
         }

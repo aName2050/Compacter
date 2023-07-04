@@ -42,7 +42,7 @@ async function loadButtons(client) {
                 chalk.bgMagentaBright.bold(' CLIENT '),
                 true,
                 chalk.yellow.bold(`... `),
-                chalk.redBright(`${chalk.bold('ERROR')} while loading buttons`)
+                chalk.redBright(`ERROR while loading buttons`)
             );
             console.log(e);
         }
