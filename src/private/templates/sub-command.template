@@ -10,7 +10,7 @@ module.exports = {
    *
    * @param {ChatInputCommandInteraction} interaction
    */
-  execute(interaction, client) {
+  async execute(interaction, client) {
 
   },
 };

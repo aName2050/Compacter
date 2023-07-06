@@ -10,5 +10,10 @@ module.exports = {
      *
      * @param {ChatInputCommandInteraction} interaction
      */
-    execute(interaction, client) {},
+    execute(interaction, client) {
+        interaction.reply({
+            content: 'this feature is currently unavailable',
+            ephemeral: true,
+        });
+    },
 };

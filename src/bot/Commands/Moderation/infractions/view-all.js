@@ -36,7 +36,8 @@ module.exports = {
             )
             .setColor(
                 require('../../../../../config/colors.json').EMBED_INVIS_SIDEBAR
-            );
+            )
+            .setFooter({ text: `${user.id}` });
         const actionRow = new ActionRowBuilder().setComponents(
             new StringSelectMenuBuilder()
                 .setCustomId('infractions.manage')
@@ -54,6 +55,10 @@ module.exports = {
             });
         });
 
-        interaction.reply({ embeds: [embed], components: [actionRow] });
+        interaction.reply({
+            embeds: [embed],
+            components: [actionRow],
+            ephemeral: true,
+        });
     },
 };

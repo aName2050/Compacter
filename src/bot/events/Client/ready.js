@@ -79,13 +79,20 @@ module.exports = {
             Status: chalk.greenBright('██  '),
             Details: `${client.guilds.cache.size} guilds, ${client.users.cache.size} users`,
         });
-        if (client.ws.ping > 350)
+        if (client.ws.ping > 350) {
+            log(
+                chalk.bgGreen.bold(' CLIENT '),
+                true,
+                chalk.yellow.bold(`... `),
+                chalk.yellow('WARNING '),
+                'Unusually high ping'
+            );
             clientDetails.push({
                 Item: 'Latency',
                 Status: chalk.red('██  '),
                 Details: `${client.ws.ping}ms`,
             });
-        else if (client.ws.ping > 199)
+        } else if (client.ws.ping > 199)
             clientDetails.push({
                 Item: 'Latency',
                 Status: chalk.yellow('██  '),
@@ -101,7 +108,7 @@ module.exports = {
         clientDetails.push({
             Item: 'Shards',
             Status: chalk.greenBright('██  '),
-            Details: `${totalShards} loaded`,
+            Details: `${totalShards} running`,
         });
 
         clientDetails.push({
