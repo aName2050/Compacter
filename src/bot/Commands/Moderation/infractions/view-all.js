@@ -23,7 +23,7 @@ module.exports = {
         const infractions = JSON.parse(userRecord.Infractions);
 
         const embed = new EmbedBuilder()
-            .setAuthor({ name: 'All User Infractions' })
+            .setAuthor({ name: `${user.id}` })
             .setTitle(`${user.username}'s Global Infractions`)
             .setDescription(
                 `${
@@ -37,7 +37,9 @@ module.exports = {
             .setColor(
                 require('../../../../../config/colors.json').EMBED_INVIS_SIDEBAR
             )
-            .setFooter({ text: `${user.id}` });
+            .setFooter({
+                text: 'After removing an infraction, rerun this command to update this list',
+            });
         const actionRow = new ActionRowBuilder().setComponents(
             new StringSelectMenuBuilder()
                 .setCustomId('infractions.manage')

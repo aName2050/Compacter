@@ -141,6 +141,8 @@ app.get('/dashboard/guilds/:id/manage', (req, res) => {
     app.emit('httpDone', req.url, 200, req.method.toLowerCase(), req);
 });
 // APIs
+// TODO: redo API system
+// FIXME: fix certain request checks not working with specific headers
 app.get('/api', (req, res) => sendError(req, res, 403));
 app.get('/api/get/permissions', (req, res) => {
     app.emit(req.method.toLowerCase(), req.url, req);
@@ -157,7 +159,7 @@ app.get('/api/get/permissions', (req, res) => {
     }
 });
 app.get('/api/get/guilds/:guildId/bot/settings', (req, res) => {
-    app.emit(req.method.toLowerCase(), req.url), req;
+    app.emit(req.method.toLowerCase(), req.url, req);
 });
 app.get('/api/get/guilds/:guildId/channels', async (req, res) => {
     app.emit(req.method.toLowerCase(), req.url, req);

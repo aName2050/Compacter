@@ -28,12 +28,6 @@ module.exports = {
             GuildID: interaction.guildId,
         });
 
-        if (!Settings || Settings == null)
-            return interaction.reply({
-                content: 'Failed to fetch settings for this server',
-                ephemeral: true,
-            });
-
         let channels = {
                 msgReport: '*Not set*',
                 msgEvent: '*Not set*',
@@ -48,11 +42,11 @@ module.exports = {
         let resetDisabled = false;
 
         if (
-            !Settings.ReportChannel &&
-            !Settings.MsgEventChannel &&
-            !Settings.ModActionChannel &&
-            !Settings.MemberLogChannel &&
-            !Settings.RulesChannel
+            !Settings?.ReportChannel &&
+            !Settings?.MsgEventChannel &&
+            !Settings?.ModActionChannel &&
+            !Settings?.MemberLogChannel &&
+            !Settings?.RulesChannel
         )
             resetDisabled = true;
 

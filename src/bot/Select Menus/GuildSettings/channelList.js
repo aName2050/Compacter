@@ -18,10 +18,6 @@ module.exports = {
                 ephemeral: true,
             });
 
-        const Settings = await DB.findOne({
-            GuildID: interaction.guildId,
-        });
-
         const channel = interaction.values;
         const setting = interaction.message.embeds[0].title;
 

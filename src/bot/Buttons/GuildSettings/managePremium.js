@@ -29,8 +29,7 @@ module.exports = {
         // });
 
         interaction.reply({
-            content:
-                "This button (Manage) is currently unvavailable and **has been disabled by the developer,** meaning the only way you could've seen this is via hacking, bypassing these restrictions[.](https://tenor.com/view/4k-caught-caught-in4k-caught-in8k-8k-gif-20014426)",
+            content: 'This button (Manage) is currently unvavailable.',
             ephemeral: true,
         });
     },

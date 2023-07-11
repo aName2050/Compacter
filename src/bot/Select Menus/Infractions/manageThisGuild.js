@@ -9,7 +9,7 @@ const {
 const Infractions = require('../../../private/mongodb/infractionsModel.js');
 
 module.exports = {
-    id: 'infractions.manage',
+    id: 'infractions.manage.thisGuild',
     /**
      * @param {StringSelectMenuInteraction} interaction
      * @param {Client} client
@@ -22,7 +22,6 @@ module.exports = {
         });
         const infraction = JSON.parse(userRecord.Infractions)[option];
 
-        const guildName = client.guilds.cache.get(infraction.GuildID).name;
         const modUsername = client.users.cache.get(
             infraction.ModeratorID
         ).username;
@@ -33,13 +32,11 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(infraction.Type)
             .setDescription(
-                `Issued by **@${modUsername}** on ${discordTimestamp}\n\n**Server:** ${guildName}\n\n**Reason:**\n${infraction.Reason}`
+                `Issued by **@${modUsername}** on ${discordTimestamp}\n\n**Reason:**\n${infraction.Reason}`
             )
             .setColor(
                 require('../../../../config/colors.json').EMBED_INVIS_SIDEBAR
             );
-
-        // TODO: add checks to disable "Remove this infraction" button if infraction is issued from another server
 
         const actionRow = new ActionRowBuilder().setComponents(
             new ButtonBuilder()

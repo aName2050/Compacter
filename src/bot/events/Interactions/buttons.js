@@ -1,10 +1,11 @@
-const { ButtonInteraction, Events } = require('discord.js');
+const { ButtonInteraction, Events, Client } = require('discord.js');
 
 module.exports = {
     name: Events.InteractionCreate,
     /**
      *
      * @param {ButtonInteraction} interaction
+     * @param {Client} client
      */
     execute(interaction, client) {
         if (!interaction.isRepliable) return;

@@ -84,11 +84,11 @@ module.exports = {
             new ButtonBuilder()
                 .setCustomId('manageSubscription')
                 .setStyle(ButtonStyle.Primary)
-                .setLabel('Manage Subscription')
+                .setLabel('Manage')
                 .setDisabled(true),
             new ButtonBuilder()
                 .setStyle(ButtonStyle.Link)
-                .setLabel('Open in your web browser')
+                .setLabel('Manage online')
                 .setURL(
                     `https://compacter.gg/guilds/${interaction.guildId}/manage/premium`
                 )

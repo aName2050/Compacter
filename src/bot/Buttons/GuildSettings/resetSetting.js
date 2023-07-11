@@ -16,8 +16,6 @@ module.exports = {
                 ephemeral: true,
             });
 
-        // await DB.findOneAndUpdate({GuildID:interaction.guild.id},{})
-
         switch (data) {
             case 'Message Report Logging':
                 {
@@ -59,6 +57,7 @@ module.exports = {
             default:
                 return interaction.reply({
                     content: 'Unable to reset this setting: unknown setting',
+                    ephemeral: true,
                 });
         }
 
