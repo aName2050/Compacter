@@ -20,7 +20,6 @@ giveaway - Manage giveaways 👨‍💻
 INFO (-> UTILITIES):
 serverinfo - Get server information 👨‍💻
 status - Get the status of the bot and bot details 👨‍💻
-User Info - Get user information (user profile context command) 👨‍💻
 
 MATH (-> FUN):
 binary - Convert a number to and from binary [function] [number] ❓
@@ -34,9 +33,8 @@ arithmetic - Do arithmetic operations on two numbers ❌
 MODERATION:
 ban - Ban a user [user] [reason] ✅
 clear - Delete a certain amount of messages in a channel or from a user [amount] [reason] {user} ✅
-infractions - View the infractions of a user [user] 👨‍💻🔄️
+infractions - View the infractions of a user [user] ✅
 kick - Kick a user [user] [reason] ✅
-Report Message - Report a message (message context command) 👨‍💻
 timeout - Timeout a user [user] [duration] [reason] ✅
 warn - Warn a user [user] [reason] ✅
 
@@ -49,4 +47,15 @@ ping - Ping the bot 👨‍💻
 suggest - Make a suggestion [suggestion] [reason] 👨‍💻
 translate - Translate text [text] [language] {fromLanguage} 👨‍💻
 
+Message Context Menu (REPORTING)
+    Report Message ✅
+    Report Message Author 🔄️
+User Context Menu
+    Report User (REPORTING) 🧑‍💻
+    View Moderation History (INFO) 🧑‍💻
+    Take Moderation Action (MODERATION) 🧑‍💻
+    User Info (INFO) 🧑‍💻
+
+
 PREMIUM:
+- none for now -

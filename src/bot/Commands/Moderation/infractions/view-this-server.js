@@ -22,11 +22,9 @@ module.exports = {
         const userRecord = await Infractions.findOne({ UserID: user.id });
         const allInfractions = JSON.parse(userRecord.Infractions);
         const infractions = new Array();
-        const matchedIDs = new Array();
         allInfractions.forEach((infraction, i) => {
             if (infraction.GuildID == interaction.guild.id) {
                 infractions.push(infraction);
-                matchedIDs.push(i);
             }
         });
 
@@ -61,13 +59,13 @@ module.exports = {
                     i.Reason +
                     ' • Moderator: ' +
                     client.users.cache.get(i.ModeratorID).username,
-                value: matchedIDs[index].toString(),
+                value: index.toString(),
             });
         });
 
         interaction.reply({
             embeds: [embed],
-            components: [actionRow],
+            components: infractions.length === 0 ? [] : [actionRow],
             ephemeral: true,
         });
     },

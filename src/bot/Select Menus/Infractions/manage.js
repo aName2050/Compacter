@@ -23,6 +23,7 @@ module.exports = {
         const infraction = JSON.parse(userRecord.Infractions)[option];
 
         const guildName = client.guilds.cache.get(infraction.GuildID).name;
+        const removeEnabled = interaction.guild.id === infraction.GuildID;
         const modUsername = client.users.cache.get(
             infraction.ModeratorID
         ).username;
@@ -39,15 +40,14 @@ module.exports = {
                 require('../../../../config/colors.json').EMBED_INVIS_SIDEBAR
             );
 
-        // TODO: add checks to disable "Remove this infraction" button if infraction is issued from another server
-
         const actionRow = new ActionRowBuilder().setComponents(
             new ButtonBuilder()
                 .setCustomId(
-                    `infractions.remove:${option};${interaction.message.embeds[0].author.name}`
+                    `infractions.remove:all;${option};${interaction.message.embeds[0].author.name}`
                 )
                 .setLabel('Remove this infraction')
                 .setStyle(ButtonStyle.Danger)
+                .setDisabled(!removeEnabled)
         );
 
         interaction.reply({

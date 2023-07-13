@@ -41,7 +41,7 @@ module.exports = {
         const actionRow = new ActionRowBuilder().setComponents(
             new ButtonBuilder()
                 .setCustomId(
-                    `infractions.remove:${option};${interaction.message.embeds[0].author.name}`
+                    `infractions.remove:current;${option};${interaction.message.embeds[0].author.name}`
                 )
                 .setLabel('Remove this infraction')
                 .setStyle(ButtonStyle.Danger)

@@ -10,7 +10,7 @@ module.exports = {
     context: false,
     message: false,
     ignoreExecuteCheck: true,
-    inDev: true,
+    inDev: false,
     disabled: false,
     requiredBotPermissions: [PermissionFlagsBits.SendMessages],
     data: new SlashCommandBuilder()

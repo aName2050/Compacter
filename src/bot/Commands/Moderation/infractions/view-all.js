@@ -21,7 +21,6 @@ module.exports = {
 
         const userRecord = await Infractions.findOne({ UserID: user.id });
         const infractions = JSON.parse(userRecord.Infractions);
-
         const embed = new EmbedBuilder()
             .setAuthor({ name: `${user.id}` })
             .setTitle(`${user.username}'s Global Infractions`)
@@ -59,7 +58,7 @@ module.exports = {
 
         interaction.reply({
             embeds: [embed],
-            components: [actionRow],
+            components: infractions.length === 0 ? [] : [actionRow],
             ephemeral: true,
         });
     },
