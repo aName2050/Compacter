@@ -1,27 +1,24 @@
-const { ButtonInteraction, Events, Client } = require('discord.js');
+const { ModalSubmitInteraction, EmbedBuilder, Events } = require('discord.js');
 
 module.exports = {
     name: Events.InteractionCreate,
     /**
      *
-     * @param {ButtonInteraction} interaction
-     * @param {Client} client
+     * @param {ModalSubmitInteraction} interaction
      */
     execute(interaction, client) {
-        if (!interaction.isRepliable) return;
-        if (!interaction.isButton()) return;
+        if (interaction.replied) return;
+        if (!interaction.isModalSubmit()) return;
 
-        const data = interaction.customId.split(':')[1];
+        const modal = client.modals.get(interaction.customId.split(':')[0]);
 
-        const button = client.buttons.get(interaction.customId.split(':')[0]);
-
-        if (!button)
+        if (!modal)
             return interaction.reply({
-                content: '```apache\nERROR: button does not exist```',
+                content: '```apache\nERROR: modal does not exist```',
                 ephemeral: true,
             });
 
-        if (button.requiredBotPermissions) {
+        if (modal.requiredBotPermissions) {
             const missingPerms = new Array();
 
             const channelPerms = interaction.guild.channels.cache
@@ -30,7 +27,7 @@ module.exports = {
                     interaction.guild.roles.botRoleFor(client.user)
                 );
 
-            button.requiredBotPermissions.forEach(p => {
+            modal.requiredBotPermissions.forEach(p => {
                 if (
                     !interaction.guild.roles
                         .botRoleFor(client.user)
@@ -50,7 +47,7 @@ module.exports = {
 
             if (missingPerms.length > 0)
                 return interaction.reply({
-                    content: `The bot is missing the following permissions required to execute this button:\n- ${missingPerms.join(
+                    content: `The bot is missing the following permissions required to execute this modal:\n- ${missingPerms.join(
                         '\n- '
                     )}`,
                     ephemeral: true,
@@ -58,13 +55,20 @@ module.exports = {
         }
 
         try {
-            button.execute(interaction, client, data);
+            modal.execute(
+                interaction,
+                client,
+                interaction.customId.split(':')[1]
+            );
         } catch (e) {
-            interaction.reply({
-                content: `\`\`\`apache\nERROR: ${error}\`\`\``,
-                ephemeral: true,
-            });
-            console.log(error);
+            const errorEmbed = new EmbedBuilder()
+                .setDescription(`\`\`\`${e}\`\`\``)
+                .setColor(
+                    require('../../../../config/colors.json')
+                        .EMBED_INVIS_SIDEBAR
+                );
+            interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            console.log(e);
         }
     },
 };

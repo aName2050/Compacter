@@ -8,7 +8,7 @@ const {
 } = require('discord.js');
 
 module.exports = {
-    id: 'msgreport.resolve',
+    id: 'usrreport.resolve',
     /**
      *
      * @param {ButtonInteraction} interaction
@@ -17,12 +17,7 @@ module.exports = {
     async execute(interaction, client, data) {
         const actionRow = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setCustomId('msgreport.del:disabled')
-                .setLabel('Delete reported message')
-                .setStyle(ButtonStyle.Danger)
-                .setDisabled(true),
-            new ButtonBuilder()
-                .setCustomId('msgreport.resolve:disabled')
+                .setCustomId('usrreport.resolve:disabled')
                 .setLabel('Marked as resolved')
                 .setStyle(ButtonStyle.Success)
                 .setDisabled(true)

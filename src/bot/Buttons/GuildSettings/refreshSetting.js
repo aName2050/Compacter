@@ -118,7 +118,7 @@ module.exports = {
         let components = [];
 
         switch (setting) {
-            case 'Message Report Logging':
+            case 'Report Logging':
                 {
                     embed.setDescription(
                         `${channels.msgReport}\n\nSet the channel for user reports to be logged to.`

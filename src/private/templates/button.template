@@ -2,10 +2,12 @@ const {
     ButtonInteraction,
     Client,
     EmbedBuilder,
+    PermissionFlagsBits
 } = require('discord.js');
 
 module.exports = {
     id: '',
+    requiredBotPermissions: [],
     /**
      *
      * @param {ButtonInteraction} interaction

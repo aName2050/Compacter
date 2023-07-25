@@ -5,6 +5,7 @@ const {
 
 module.exports = {
     id: '',
+    requiredBotPermissions: [],
     /**
      * @param {} interaction
      * @param {Client} client

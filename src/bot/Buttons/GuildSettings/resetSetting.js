@@ -17,7 +17,7 @@ module.exports = {
             });
 
         switch (data) {
-            case 'Message Report Logging':
+            case 'Report Logging':
                 {
                     await DB.findOneAndUpdate(
                         { GuildID: interaction.guildId },

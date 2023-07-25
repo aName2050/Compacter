@@ -80,7 +80,7 @@ module.exports = {
             .setDescription('View and edit server settings')
             .addFields(
                 {
-                    name: 'Message Report Logging',
+                    name: 'Report Logging',
                     value: channels.msgReport,
                 },
                 { name: 'Message Event Logging', value: channels.msgEvent },
@@ -108,7 +108,7 @@ module.exports = {
                 .setPlaceholder('No setting selected')
                 .setOptions(
                     {
-                        label: 'Message Report Logging',
+                        label: 'Report Logging',
                         description:
                             'The channel where reported messages will be sent to',
                         value: 'settings.msgreport.0',

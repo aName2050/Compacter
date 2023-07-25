@@ -1,9 +1,9 @@
 const {
-    ContextMenuCommandBuilder,
-    MessageContextMenuCommandInteraction,
-    ApplicationCommandType,
-    PermissionFlagsBits,
+    UserContextMenuCommandInteraction,
     EmbedBuilder,
+    ContextMenuCommandBuilder,
+    PermissionFlagsBits,
+    ApplicationCommandType,
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
@@ -15,24 +15,19 @@ const GuildSettings = require('../../../private/mongodb/guildSettings.js');
 const colors = require('../../../../config/colors.json');
 
 module.exports = {
-    developer: false,
-    context: false,
-    message: true,
-    ignoreExecuteCheck: false,
-    inDev: true,
-    disabled: false,
-    requiredBotPermissions: [PermissionFlagsBits.SendMessages],
+    context: true,
     data: new ContextMenuCommandBuilder()
-        .setType(ApplicationCommandType.Message)
-        .setName('Report Message')
+        .setName('Report User')
+        .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages)
+        .setType(ApplicationCommandType.User)
         .setDMPermission(false),
     /**
      *
-     * @param {MessageContextMenuCommandInteraction} interaction
+     * @param {UserContextMenuCommandInteraction} interaction
      */
-    async execute(interaction, client) {
+    async execute(interaction) {
+        const user = interaction.targetUser;
         const { guild } = interaction;
-        const msg = interaction.targetMessage;
 
         const settings = await GuildSettings.findOne({ GuildID: guild.id });
         const logChannel = settings?.ReportChannel;
@@ -40,29 +35,29 @@ module.exports = {
         if (!logChannel || !logChannel === '')
             return interaction.reply({
                 content:
-                    'Unable to report this message to moderators, reporting is disabled in this server.',
+                    'Unable to report this user to moderators, reporting is disabled in this server.',
                 ephemeral: true,
             });
 
-        if (msg.author.id !== interaction.user.id)
+        if (user.id == interaction.user.id)
             return interaction.reply({
-                content: "You can't report your own message!",
+                content: "You can't report yourself!",
                 ephemeral: true,
             });
 
         const reasonTextfield = new ActionRowBuilder().setComponents(
             new TextInputBuilder()
-                .setCustomId('msgreport.reason')
+                .setCustomId('usrreport.reason')
                 .setPlaceholder(`Enter a reason...`)
-                .setLabel('Why are you reporting this message?')
+                .setLabel(`Why are you reporting this user?`)
                 .setStyle(TextInputStyle.Paragraph)
                 .setMinLength(10)
                 .setMaxLength(1000)
                 .setRequired(true)
         );
         const modal = new ModalBuilder()
-            .setTitle('Message Reporting')
-            .setCustomId(`msgreport:${msg.id};${msg.channel.id}`)
+            .setTitle('User Reporting')
+            .setCustomId(`usrreport:${user.id}`)
             .setComponents(reasonTextfield);
 
         await interaction.showModal(modal);

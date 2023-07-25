@@ -8,7 +8,7 @@ const botConfig = require('../../../../config/bot.json');
 const { loadCommands } = require('../../Handlers/commandHandler.js');
 const { loadButtons } = require('../../Handlers/buttonHandler');
 const { loadSelectMenus } = require('../../Handlers/selectMenuHandler');
-// const { loadModals } = require('../../Handlers/modalHandler');
+const { loadModals } = require('../../Handlers/modalHandler');
 
 module.exports = {
     name: Events.ClientReady,
@@ -34,7 +34,7 @@ module.exports = {
         await loadCommands(client);
         await loadButtons(client);
         await loadSelectMenus(client);
-        // await loadModals(client);
+        await loadModals(client);
 
         // Connect database
         if (!botConfig.MONGO_SRV)

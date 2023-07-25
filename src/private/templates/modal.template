@@ -1,0 +1,14 @@
+const { Client, EmbedBuilder, ModalSubmitInteraction } = require('discord.js');
+
+module.exports = {
+    id: '',
+    requiredBotPermissions: [],
+    /**
+     *
+     * @param {ModalSubmitInteraction} interaction
+     * @param {Client} client
+     */
+    execute(interaction, client, data) {
+
+    },
+};
