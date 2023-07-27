@@ -42,10 +42,10 @@ SETTINGS (-> UTILITIES):
 settings - Edit and view settings for your server ✅
 
 UTILITIES:
-debug - Run a diagnostic check on the bot 👨‍💻 ! s
-ping - Ping the bot 👨‍💻 ! s
-suggest - Make a suggestion [suggestion] [reason] 👨‍💻
-translate - Translate text [text] [language] {fromLanguage} 👨‍💻
+debug - Run a diagnostic check on the bot 👨‍💻 !
+ping - Ping the bot ✅
+suggest - Make a suggestion [suggestion] [reason] 👨‍💻 *
+translate - Translate text [text] [language] {fromLanguage} 👨‍💻 *
 
 Message Context Menu (REPORTING)
     Report Message ✅
@@ -54,7 +54,7 @@ User Context Menu
     Report User (REPORTING) ✅
     View Moderation History (INFO) 🧑‍💻 *
     Take Moderation Action (MODERATION) 🧑‍💻 *
-    User Info (INFO) 🔄️ s
+    User Info (INFO) ✅
 
 * coming in future Compacter 3 update
 ! high priority
