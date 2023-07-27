@@ -19,7 +19,7 @@ module.exports = {
     context: false,
     message: true,
     ignoreExecuteCheck: false,
-    inDev: true,
+    inDev: false,
     disabled: false,
     requiredBotPermissions: [PermissionFlagsBits.SendMessages],
     data: new ContextMenuCommandBuilder()

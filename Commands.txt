@@ -42,7 +42,7 @@ SETTINGS (-> UTILITIES):
 settings - Edit and view settings for your server ✅
 
 UTILITIES:
-debug - Run a diagnostic check on the bot 👨‍💻 !
+debug - Run a diagnostic check on the bot 🔄️
 ping - Ping the bot ✅
 suggest - Make a suggestion [suggestion] [reason] 👨‍💻 *
 translate - Translate text [text] [language] {fromLanguage} 👨‍💻 *
