@@ -6,7 +6,7 @@ const {
 const DB = require('../../../private/mongodb/guildSettings.js');
 
 module.exports = {
-    id: 'settings.channelMenu',
+    id: 'settings.rulesChannelMenu',
     /**
      * @param {StringSelectMenuInteraction} interaction
      * @param {Client} client

@@ -167,21 +167,28 @@ module.exports = {
             ].join('\n');
             const attachment = new AttachmentBuilder(
                 Buffer.from(data, 'utf-8'),
-                { name: `${Date.now()}-FEEDBACK.txt` }
+                { name: `${Date.now()}-DIAGNOSTIC_DATA.txt` }
             );
-
+            feedbackEmbed.setFooter({
+                text: '!! This user has chosen to opt-in to sharing diagnostic data !!',
+            });
             webhook.send({ embeds: [feedbackEmbed], files: [attachment] });
 
-            interaction.reply({
-                content:
-                    'Submitted feedback! *A copy of the diagnostic data has been sent to your **DMs***',
-                ephemeral: true,
-            });
-            interaction.user.send({
-                content: `Hey <@${interaction.user.id}>, here's a copy of the diagnostic data submitted.`,
-                files: [attachment],
-            });
+            interaction.user
+                .send({
+                    content: `Hey <@${interaction.user.id}>, here's a copy of the diagnostic data submitted.`,
+                    files: [attachment],
+                })
+                .then(dm =>
+                    interaction.reply({
+                        content: `Submitted feedback! *A copy of the diagnostic data has been sent to your **[DMs](<https://discord.com/channels/@me/${dm.channel.id}>)***`,
+                        ephemeral: true,
+                    })
+                );
         } else {
+            feedbackEmbed.setFooter({
+                text: '!! This user has chosen to opt-out to sharing diagnostic data !!',
+            });
             webhook.send({ embeds: [feedbackEmbed] });
             interaction.reply({
                 content: 'Submitted feedback!',
