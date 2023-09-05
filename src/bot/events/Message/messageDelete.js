@@ -18,6 +18,7 @@ module.exports = {
         if (message.author == null) {
             const embed = new EmbedBuilder()
                 .setTitle('Deleted Message')
+                .setColor(colors.EMBED_INVIS_SIDEBAR)
                 .setAuthor({ name: 'Unknown user' })
                 .setDescription(
                     `${message.content ? message.content : '`None`'}`.slice(
@@ -39,7 +40,8 @@ module.exports = {
             .setColor(colors.EMBED_INVIS_SIDEBAR)
             .setDescription(
                 `A message sent by <@${message.author.id}> was deleted in <#${message.channel.id}>`
-            );
+            )
+            .setTimestamp();
         const Message = new EmbedBuilder()
             .setColor(colors.EMBED_INVIS_SIDEBAR)
             .setTitle('Deleted Message')
