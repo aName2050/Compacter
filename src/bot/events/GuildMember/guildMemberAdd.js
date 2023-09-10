@@ -18,15 +18,15 @@ module.exports = {
         if (!channelLog || !rulesChannel) return;
 
         const embed = new EmbedBuilder()
-            .setColor(guild.roles.highest.hexColor.toString())
+            .setColor(user.hexAccentColor || 'Random')
             .setAuthor({
                 name: user.username,
                 iconURL: user.avatarURL({ forceStatic: false, size: 512 }),
             })
             .setDescription(
-                `Welcome to **${guild.name}**!\nPlease read the <#${
-                    rulesChannel.id
-                }> before engaging in activities in this server!\n\nAccount created <t:${parseInt(
+                `Welcome to **${
+                    guild.name
+                }**!\nPlease read the <#${rulesChannel}> before engaging in activities in this server!\n\nAccount created <t:${parseInt(
                     user.createdTimestamp / 1000
                 )}:R>`
             )
