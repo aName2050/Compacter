@@ -21,6 +21,8 @@ module.exports = {
 
         const maxLength = 4096;
 
+        if (oldMessage.content == newMessage.content) return;
+
         const Original =
             oldMessage.content.length > maxLength
                 ? oldMessage.content.slice(0, maxLength - 3) + '...'
