@@ -67,10 +67,10 @@ module.exports = {
 
             message.attachments.map(a => {
                 if (
-                    !a.url.endsWith('.png') ||
-                    !a.url.endsWith('.jpg') ||
-                    !a.url.endsWith('.jpeg') ||
-                    !a.url.endsWith('.mov') ||
+                    !a.url.endsWith('.png') &&
+                    !a.url.endsWith('.jpg') &&
+                    !a.url.endsWith('.jpeg') &&
+                    !a.url.endsWith('.mov') &&
                     !a.url.endsWith('.mp4')
                 )
                     Attachments.setDescription(
