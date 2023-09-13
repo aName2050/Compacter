@@ -89,6 +89,10 @@ module.exports = {
                     value: channels.memberLogging.channel,
                 },
                 { name: 'Rules Channel', value: channels.memberLogging.rules },
+                {
+                    name: 'Ignored Channels',
+                    value: 'Open this setting to view more',
+                },
                 { name: 'Premium Tier', value: premium }
             )
             .setColor(
@@ -128,10 +132,16 @@ module.exports = {
                         value: 'settings.memberlog.3',
                     },
                     {
+                        label: 'Ignored Channels',
+                        description:
+                            'A list of channels that the bot will completely ignore in terms of logging',
+                        value: 'settings.ignoredChannels.4',
+                    },
+                    {
                         label: 'Compacter Premium',
                         description:
                             'Manage your Compacter Premium subscription',
-                        value: 'settings.premium.4',
+                        value: 'settings.premium.5',
                     }
                 )
         );
