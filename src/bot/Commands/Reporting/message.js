@@ -44,7 +44,7 @@ module.exports = {
                 ephemeral: true,
             });
 
-        if (msg.author.id !== interaction.user.id)
+        if (msg.author.id == interaction.user.id)
             return interaction.reply({
                 content: "You can't report your own message!",
                 ephemeral: true,
