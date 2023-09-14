@@ -59,6 +59,10 @@ module.exports = {
         };
         premium = Settings?.premium ? Settings.premium : 'Free';
 
+        let ignoredChannels = JSON.parse(
+            Settings.IgnoredChannels.Universal
+        ).map(c => `\n* <#${c}>`);
+
         const o = interaction.values[0].split('.');
         const option = o[1];
         const optionLabel =
@@ -75,6 +79,8 @@ module.exports = {
                 .setChannelTypes(ChannelType.GuildText)
                 .setPlaceholder('Select a channel to log to')
                 .setCustomId('settings.channelMenu')
+                .setMinValues(1)
+                .setMaxValues(1)
         );
         const actionRow2 = new ActionRowBuilder().setComponents(
             new ButtonBuilder()
@@ -111,11 +117,29 @@ module.exports = {
                 .setChannelTypes(ChannelType.GuildText)
                 .setPlaceholder('Select a rules channel')
                 .setCustomId('settings.rulesChannelMenu')
+                .setMinValues(1)
+                .setMaxValues(1)
+        );
+        const actionRow6 = new ActionRowBuilder().setComponents(
+            new ChannelSelectMenuBuilder()
+                .setChannelTypes(
+                    ChannelType.GuildText,
+                    ChannelType.GuildAnnouncement
+                )
+                .setPlaceholder(
+                    'Select channels for Compacter to completely ignore'
+                )
+                .setCustomId('settings.channelIgnoreList')
+                .setMinValues(1)
+                .setMaxValues(
+                    Math.floor(interaction.guild.channels.cache.size / 2)
+                )
         );
 
         const channelEditComponents = [actionRow1, actionRow2];
         const memberLogEditComponets = [actionRow1, actionRow5, actionRow2];
         const premiumManageComponets = [actionRow3];
+        const universalIgnoredChannels = [actionRow6];
         const genericComponets = [actionRow4];
         let components = [];
 
@@ -150,6 +174,22 @@ module.exports = {
                         `Log channel: ${channels.memberLogging.channel}\nRules channel: ${channels.memberLogging.rules}\n\nSet the channel for member logs and the server rules channel.`
                     );
                     components = memberLogEditComponets;
+                }
+                break;
+            case 'ignoredChannels':
+                {
+                    embed.setDescription(
+                        `You are currently ignoring ${
+                            JSON.parse(Settings.IgnoredChannels.Universal)
+                                .length
+                        } channels\n${
+                            JSON.parse(Settings.IgnoredChannels.Universal)
+                                .length == 0
+                                ? '\n`None`'
+                                : ignoredChannels
+                        }`
+                    );
+                    components = universalIgnoredChannels;
                 }
                 break;
             case 'premium':

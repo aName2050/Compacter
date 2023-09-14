@@ -37,6 +37,13 @@ module.exports = model(
             default: '',
             required: false,
         },
+        IgnoredChannels: {
+            Universal: {
+                type: String,
+                default: '[]',
+                required: false,
+            },
+        },
     }),
     'guildsettings'
 );
