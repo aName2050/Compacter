@@ -95,7 +95,9 @@ module.exports = {
                 { name: 'Rules Channel', value: channels.memberLogging.rules },
                 {
                     name: 'Ignored Channels',
-                    value: 'Open this setting to view more',
+                    value: `${
+                        JSON.parse(Settings.IgnoredChannels.Universal).length
+                    } ignored\nOpen this setting to view more`,
                 },
                 { name: 'Premium Tier', value: premium }
             )
@@ -110,6 +112,8 @@ module.exports = {
             new StringSelectMenuBuilder()
                 .setCustomId('settings.selectSetting')
                 .setPlaceholder('No setting selected')
+                .setMinValues(1)
+                .setMaxValues(1)
                 .setOptions(
                     {
                         label: 'Report Logging',
@@ -120,7 +124,7 @@ module.exports = {
                     {
                         label: 'Message Event Logging',
                         description:
-                            'The channel where message events (edit, delete, etc.) will be sent to',
+                            'The channel where message logs will be sent',
                         value: 'settings.msgevent.1',
                     },
                     {
@@ -138,7 +142,7 @@ module.exports = {
                     {
                         label: 'Ignored Channels',
                         description:
-                            'A list of channels that the bot will completely ignore in terms of logging',
+                            'A list of channels that the bot will log nothing for',
                         value: 'settings.ignoredChannels.4',
                     },
                     {
