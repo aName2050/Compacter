@@ -49,6 +49,14 @@ module.exports = {
                     );
                 }
                 break;
+            case 'Ignored Channels':
+                {
+                    await DB.findOneAndUpdate(
+                        { GuildID: interaction.guildId },
+                        { IgnoredChannels: { Universal: '[]' } }
+                    );
+                }
+                break;
             case 'Compacter Premium':
                 {
                     // currently unavailable
