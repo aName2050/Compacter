@@ -1,6 +1,8 @@
 const botConfig = require('../config/bot.json');
 const webConfig = require('../config/web.json');
 
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const { request } = require('undici');
@@ -11,7 +13,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const { PORT, REDIRECTS, COOKIE_SECRET } = webConfig;
+const { PORT, REDIRECTS } = webConfig;
+const COOKIE_SECRET = process.env.COOKIE_SECRET;
 
 const { sendError } = require('./util/helpers/sendError.js');
 const { getPerm } = require('./util/APIs/app/dPermBigint.js');

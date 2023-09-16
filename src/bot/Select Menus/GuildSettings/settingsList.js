@@ -59,9 +59,9 @@ module.exports = {
         };
         premium = Settings?.premium ? Settings.premium : 'Free';
 
-        let ignoredChannels = JSON.parse(
-            Settings.IgnoredChannels.Universal
-        ).map(c => `\n* <#${c}>`);
+        let ignoredChannels = JSON.parse(Settings.IgnoredChannels.Universal)
+            .map(c => `\n* <#${c}>`)
+            .join('');
 
         const o = interaction.values[0].split('.');
         const option = o[1];
@@ -139,7 +139,8 @@ module.exports = {
         const channelEditComponents = [actionRow1, actionRow2];
         const memberLogEditComponets = [actionRow1, actionRow5, actionRow2];
         const premiumManageComponets = [actionRow3];
-        const universalIgnoredChannels = [actionRow6];
+        const universalIgnoredChannels = [actionRow6, actionRow2];
+
         const genericComponets = [actionRow4];
         let components = [];
 
@@ -187,7 +188,8 @@ module.exports = {
                                 .length == 0
                                 ? '\n`None`'
                                 : ignoredChannels
-                        }`
+                        }\n\nEdit your list of ignored channels by adding/removing channels`
+
                     );
                     components = universalIgnoredChannels;
                 }

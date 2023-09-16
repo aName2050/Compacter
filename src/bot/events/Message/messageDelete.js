@@ -15,6 +15,11 @@ module.exports = {
         const channelLog = settings.MsgEventChannel;
         if (!channelLog) return;
 
+        if (settings.IgnoredChannels.Universal != '[]') {
+            const channels = JSON.parse(settings.IgnoredChannels.Universal);
+            if (channels.includes(message.channel.id)) return;
+        }
+
         if (message.author == null) {
             const embed = new EmbedBuilder()
                 .setTitle('Deleted Message')
