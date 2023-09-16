@@ -140,6 +140,7 @@ module.exports = {
         const memberLogEditComponets = [actionRow1, actionRow5, actionRow2];
         const premiumManageComponets = [actionRow3];
         const universalIgnoredChannels = [actionRow6, actionRow2];
+
         const genericComponets = [actionRow4];
         let components = [];
 
@@ -188,6 +189,7 @@ module.exports = {
                                 ? '\n`None`'
                                 : ignoredChannels
                         }\n\nEdit your list of ignored channels by adding/removing channels`
+
                     );
                     components = universalIgnoredChannels;
                 }
