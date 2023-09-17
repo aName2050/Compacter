@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/aName2050/Compacter/actions/workflows/codeql.yml/badge.svg)](https://github.com/aName2050/Compacter/actions/workflows/codeql.yml)
+
 # Compacter
 
 A Discord bot focused around math!
