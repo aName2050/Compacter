@@ -48,9 +48,7 @@ module.exports = {
             actionRow.components[0].addOptions({
                 label: i.Type.toString(),
                 description:
-                    'Reason: ' +
-                    i.Reason +
-                    ' • Moderator: ' +
+                    'Moderator: ' +
                     client.users.cache.get(i.ModeratorID).username,
                 value: index.toString(),
             });
