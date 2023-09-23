@@ -61,7 +61,7 @@ User Context Menu
 s simple command that can be finished quickly
 
 LOGGING:
-🔄️
+✅
 
 PREMIUM:
 - none for now -
