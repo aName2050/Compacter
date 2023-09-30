@@ -15,6 +15,11 @@ module.exports = {
         const channelLog = settings.MsgEventChannel;
         if (!channelLog) return;
 
+        if (settings.IgnoredChannels.Universal != '[]') {
+            const channels = JSON.parse(settings.IgnoredChannels.Universal);
+            if (channels.includes(message.channel.id)) return;
+        }
+
         if (message.author == null) {
             const embed = new EmbedBuilder()
                 .setTitle('Deleted Message')
@@ -67,10 +72,10 @@ module.exports = {
 
             message.attachments.map(a => {
                 if (
-                    !a.url.endsWith('.png') ||
-                    !a.url.endsWith('.jpg') ||
-                    !a.url.endsWith('.jpeg') ||
-                    !a.url.endsWith('.mov') ||
+                    !a.url.endsWith('.png') &&
+                    !a.url.endsWith('.jpg') &&
+                    !a.url.endsWith('.jpeg') &&
+                    !a.url.endsWith('.mov') &&
                     !a.url.endsWith('.mp4')
                 )
                     Attachments.setDescription(

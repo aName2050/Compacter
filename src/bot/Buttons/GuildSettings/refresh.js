@@ -89,6 +89,12 @@ module.exports = {
                     value: channels.memberLogging.channel,
                 },
                 { name: 'Rules Channel', value: channels.memberLogging.rules },
+                {
+                    name: 'Ignored Channels',
+                    value: `${
+                        JSON.parse(Settings.IgnoredChannels.Universal).length
+                    } ignored\nOpen this setting to view more`,
+                },
                 { name: 'Premium Tier', value: premium }
             )
             .setColor(
@@ -102,6 +108,8 @@ module.exports = {
             new StringSelectMenuBuilder()
                 .setCustomId('settings.selectSetting')
                 .setPlaceholder('No setting selected')
+                .setMinValues(1)
+                .setMaxValues(1)
                 .setOptions(
                     {
                         label: 'Report Logging',
@@ -112,7 +120,7 @@ module.exports = {
                     {
                         label: 'Message Event Logging',
                         description:
-                            'The channel where message events (edit, delete, etc.) will be sent to',
+                            'The channel where message logs will be sent',
                         value: 'settings.msgevent.1',
                     },
                     {
@@ -128,10 +136,16 @@ module.exports = {
                         value: 'settings.memberlog.3',
                     },
                     {
+                        label: 'Ignored Channels',
+                        description:
+                            'A list of channels that the bot will log nothing for',
+                        value: 'settings.ignoredChannels.4',
+                    },
+                    {
                         label: 'Compacter Premium',
                         description:
                             'Manage your Compacter Premium subscription',
-                        value: 'settings.premium.4',
+                        value: 'settings.premium.5',
                     }
                 )
         );

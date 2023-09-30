@@ -16,10 +16,17 @@ module.exports = {
         const channelLog = settings.MsgEventChannel;
         if (!channelLog) return;
 
+        if (settings.IgnoredChannels.Universal != '[]') {
+            const channels = JSON.parse(settings.IgnoredChannels.Universal);
+            if (channels.includes(message.channel.id)) return;
+        }
+
         await oldMessage.fetch(true);
         await newMessage.fetch(true);
 
         const maxLength = 4096;
+
+        if (oldMessage.content == newMessage.content) return;
 
         const Original =
             oldMessage.content.length > maxLength
