@@ -18,7 +18,7 @@ module.exports = {
 
         if (settings.IgnoredChannels.Universal != '[]') {
             const channels = JSON.parse(settings.IgnoredChannels.Universal);
-            if (channels.includes(message.channel.id)) return;
+            if (channels.includes(oldMessage.channel.id)) return;
         }
 
         await oldMessage.fetch(true);
