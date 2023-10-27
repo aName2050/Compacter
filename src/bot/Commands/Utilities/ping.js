@@ -28,9 +28,11 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle('Pong! 🏓')
             .setDescription(
-                `API Latency: **${client.ws.ping}ms**\nGateway Latency: **${
+                `API Latency: **${
+                    client.ws.ping
+                }ms**\nGateway Latency: **${Math.abs(
                     Date.now() - interaction.createdTimestamp
-                }ms**`
+                )}ms**`
             )
             .setColor(
                 require('../../../../config/colors.json').EMBED_INVIS_SIDEBAR
