@@ -314,6 +314,7 @@ const manager = new discord.ShardingManager('./src/bot/bot.js', {
     token: static['BOT-TOKEN'],
     respawn: false,
 });
+
 manager.on('shardCreate', shard => {
     log(
         chalk.bgCyan.bold(' SERVER '),
