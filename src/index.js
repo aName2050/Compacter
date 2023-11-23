@@ -1,6 +1,8 @@
 const botConfig = require('../config/bot.json');
 const webConfig = require('../config/web.json');
 
+const static = require('../config/static.json');
+
 require('dotenv').config();
 
 const express = require('express');
@@ -309,7 +311,7 @@ app.on('httpError', (route, errCode, method, req) => {
 // require('./bot/bot.js');
 const manager = new discord.ShardingManager('./src/bot/bot.js', {
     totalShards: 'auto',
-    token: botConfig.Token,
+    token: static['BOT-TOKEN'],
     respawn: false,
 });
 manager.on('shardCreate', shard => {
