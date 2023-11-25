@@ -20,24 +20,7 @@ module.exports = {
             if (channels.includes(message.channel.id)) return;
         }
 
-        if (message.author == null) {
-            const embed = new EmbedBuilder()
-                .setTitle('Deleted Message')
-                .setColor(colors.EMBED_INVIS_SIDEBAR)
-                .setAuthor({ name: 'Unknown user' })
-                .setDescription(
-                    `${message.content ? message.content : '`None`'}`.slice(
-                        0,
-                        4096
-                    )
-                );
-            const channel = guild.channels.cache.get(`${channelLog}`);
-            return channel
-                ? channel
-                      .send({ embeds: [embed] })
-                      .catch(err => console.error(err))
-                : null;
-        }
+        if (message.author == null) return;
 
         if (message.author.bot) return;
 

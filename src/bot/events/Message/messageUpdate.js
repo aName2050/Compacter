@@ -44,8 +44,7 @@ module.exports = {
         const EditedEmbed = new EmbedBuilder()
             .setColor(colors.EMBED_INVIS_SIDEBAR)
             .setTitle('Edited')
-            .setDescription(`${Edited}`)
-            .setTimestamp();
+            .setDescription(`${Edited}`);
 
         if (oldMessage.author == null || newMessage.author == null) {
             const embed = new EmbedBuilder()
@@ -64,7 +63,8 @@ module.exports = {
             .setColor(colors.EMBED_INVIS_SIDEBAR)
             .setDescription(
                 `A message by <@${oldMessage.author.id}> was edited\n\n[**Jump to message**](${newMessage.url})`
-            );
+            )
+            .setTimestamp();
 
         const channel = guild.channels.cache.get(`${channelLog}`);
         return channel
