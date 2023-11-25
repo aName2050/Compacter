@@ -6,7 +6,7 @@ module.exports = {
      * @param {import("express").Request} req
      * @param {import("express").Response} res
      * @param {import('../../../../config/web.json')} web
-     * @param {import('../../../../config/bot.json')} bot
+     * @param {import('../../../../config/static.json')} bot
      */
     run(req, res, web, bot) {
         if (req.signedCookies.state) res.clearCookie('stateParam');

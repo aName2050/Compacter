@@ -7,7 +7,7 @@ module.exports = {
      * @param {import("express").Request} req
      * @param {import("express").Response} res
      * @param {import('../../../../../config/web.json')} web
-     * @param {import('../../../../../config/bot.json')} bot
+     * @param {import('../../../../../config/static.json')} bot
      */
     async run(req, res, web, bot) {
         const { code, state } = req.query;

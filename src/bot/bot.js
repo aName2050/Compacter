@@ -31,7 +31,7 @@ const client = new Client({
 
 const { loadEvents } = require('./Handlers/eventHandler.js');
 
-client.config = require('../../config/bot.json');
+client.config = require('../../config/static.json');
 client.events = new Collection();
 client.commands = new Collection();
 client.subCommands = new Collection();
@@ -48,7 +48,7 @@ require('./Handlers/crashHandler.js')(client);
 // });
 
 client
-    .login(client.config.Token)
+    .login(client.config['BOT-TOKEN'])
     .then(() => {
         log(
             chalk.bgMagentaBright.bold(' CLIENT '),
