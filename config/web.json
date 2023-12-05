@@ -1,7 +1,0 @@
-{
-    "PORT": "5000",
-    "REDIRECTS": {
-        "local": "http://localhost:5000/login/discord/oauth/redirect",
-        "production": "https://compacter.gg/login/discord/oauth2/redirect"
-    }
-}
