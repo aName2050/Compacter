@@ -31,3 +31,5 @@ logger.log(LogType.Info, `Handed off control to ${chalk.blue('server.ts')}`);
 
 export default app;
 import './Server/server';
+
+import http from './Util/helpers/http';
