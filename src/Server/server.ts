@@ -5,8 +5,12 @@ import app from '../index';
 
 const { PORT, REDIRECTS } = config.WEB;
 
-logger.log(LogType.Server, 'Initializing server...');
+logger.log(undefined, LogType.Server, 'Initializing server...');
 
 app.listen(PORT, () => {
-    logger.log(LogType.Server, `Server listening on ${chalk.bold(`${PORT}`)}`);
+    logger.log(
+        undefined,
+        LogType.Server,
+        `Server listening on ${chalk.bold(`${PORT}`)}`
+    );
 });

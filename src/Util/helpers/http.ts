@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import logger, { LogType } from '../logger';
 
 class HTTP {
@@ -36,7 +37,7 @@ class HTTP {
         method: string,
         httpCode: string
     ): boolean {
-        logger.log(LogType.HTTP, this.getIP(req));
+        logger.log(req, LogType.HTTP, `${httpCode} ${method} ${req.url}`);
         return true;
     }
 

@@ -1,19 +1,14 @@
 import chalk from 'chalk';
+import http from './helpers/http';
 
 class Logger {
-    private ErrorColor: string = '#EE000F';
-    private CommandColor: string = '#00EE00';
-    private InfoColor: string = '#00AAFF';
-    private ServerColor: string = '#FFAA00';
-    private HTTPColor: string = '#0000FF';
-    private LogColor: string = '#FFFFFF';
-
     /**
      *
-     * @param type THe log type
+     * @param req Set to undefined if not including Request object, defualts to local IP
+     * @param type The log type
      * @param args The stuff to log
      */
-    public log(type: LogType, ...args: any[]) {
+    public log(req: any = undefined, type: LogType, ...args: any[]) {
         // Timestamp
         const now: Date = new Date();
         let day: number,
@@ -31,54 +26,55 @@ class Logger {
         second = (now.getSeconds() + '').padStart(2, '0');
         ms = (now.getMilliseconds() + '').padStart(3, '0');
         const timestamp: string = `${month}/${day}/${year} ${hour}:${minute}:${second}.${ms}`;
+        const ip: string = chalk.yellow(`${req ? http.getIP(req) : '::1\t'}`);
 
         // Log data
         let data: string = '';
         switch (type) {
             case LogType.Log:
                 {
-                    data = chalk.bgHex(this.LogColor).bold(' LOG \t\t');
+                    data = ' LOG \t';
                 }
                 break;
             case LogType.Error:
                 {
-                    data = chalk.bgHex(this.ErrorColor).bold(' ERROR \t\t');
+                    data = ' ERROR \t';
                 }
                 break;
             case LogType.HTTP:
                 {
-                    data = chalk.bgHex(this.HTTPColor).bold(' HTTP \t\t');
+                    data = ' HTTP \t';
                 }
                 break;
             case LogType.Info:
                 {
-                    data = chalk.bgHex(this.InfoColor).bold(' INFO \t\t');
+                    data = ' INFO \t';
                 }
                 break;
             case LogType.Server:
                 {
-                    data = chalk.bgHex(this.ServerColor).bold(' SERVER \t\t');
+                    data = ' SERVER ';
                 }
                 break;
             case LogType.Command:
                 {
-                    data = chalk.bgHex(this.CommandColor).bold(' COMMAND \t');
+                    data = ' COMMAND';
                 }
                 break;
             case LogType.MongoDB:
                 {
-                    data = chalk.bgHex(this.CommandColor).bold(' MONGODB \t\t');
+                    data = ' MONGODB';
                 }
                 break;
 
             default:
                 {
-                    data = chalk.bgHex(this.LogColor).bold(' LOG ');
+                    data = ' LOG \t';
                 }
                 break;
         }
         // Output log
-        console.log(timestamp, data, args.join(''));
+        console.log(timestamp, data, ` ${ip}\t`, args.join(''));
     }
 }
 

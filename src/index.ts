@@ -18,7 +18,7 @@ import bodyParser from 'body-parser';
 const COOKIE_SECRET: string = privateConfig.COOKIE_SECRET;
 
 // Server initialization and handoff
-logger.log(LogType.Info, 'Starting up server...');
+logger.log(undefined, LogType.Info, 'Starting up server...');
 const app: Application = express();
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -27,7 +27,11 @@ app.use(cookieParser(COOKIE_SECRET));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-logger.log(LogType.Info, `Handed off control to ${chalk.blue('server.ts')}`);
+logger.log(
+    undefined,
+    LogType.Info,
+    `Handed off control to ${chalk.blue('server.ts')}`
+);
 
 export default app;
 import './Server/server';
