@@ -74,7 +74,7 @@ class Logger {
 				break;
 		}
 		// Output log
-		console.log(timestamp, data, `${'abcdefghijklmno'}\t`, args.join(''));
+		console.log(timestamp, data, `${ip}\t`, args.join(''));
 	}
 }
 
