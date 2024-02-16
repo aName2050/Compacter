@@ -1,19 +1,27 @@
-import { Client } from 'discord.js';
+import { Client, Collection } from 'discord.js';
 import IConfig from '../interfaces/IConfig';
 import IClient from '../interfaces/IClient';
 import logger, { LogType } from '../../../Util/logger';
 import chalk from 'chalk';
 import Handler from './Handler';
+import Command from './Command';
+import SubCommand from './SubCommand';
 
 export default class BotClient extends Client implements IClient {
 	handler: Handler;
 	config: IConfig;
+	commands: Collection<string, Command>;
+	subcommands: Collection<string, SubCommand>;
+	cooldowns: Collection<string, Collection<string, number>>;
 
 	constructor() {
 		super({ intents: [] });
 
 		this.config = require(`../../../../config/static.json`);
 		this.handler = new Handler(this);
+		this.commands = new Collection();
+		this.subcommands = new Collection();
+		this.cooldowns = new Collection();
 	}
 
 	Init(): void {
@@ -38,5 +46,6 @@ export default class BotClient extends Client implements IClient {
 
 	LoadHandlers(): void {
 		this.handler.LoadEvents();
+		this.handler.LoadCommands(); // 11.05
 	}
 }
