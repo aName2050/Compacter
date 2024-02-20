@@ -33,43 +33,43 @@ class Logger {
 		switch (type) {
 			case LogType.Log:
 				{
-					data = ' LOG \t';
+					data = chalk.white(' LOG \t');
 				}
 				break;
 			case LogType.Error:
 				{
-					data = ' ERROR \t';
+					data = chalk.redBright(' ERROR \t');
 				}
 				break;
 			case LogType.HTTP:
 				{
-					data = ' HTTP \t';
+					data = chalk.blue(' HTTP \t');
 				}
 				break;
 			case LogType.Info:
 				{
-					data = ' INFO \t';
+					data = chalk.cyanBright(' INFO \t');
 				}
 				break;
 			case LogType.Server:
 				{
-					data = ' SERVER ';
+					data = chalk.cyan(' SERVER ');
 				}
 				break;
 			case LogType.Command:
 				{
-					data = ' COMMAND';
+					data = chalk.yellowBright(' COMMAND');
 				}
 				break;
 			case LogType.MongoDB:
 				{
-					data = ' MONGODB';
+					data = chalk.greenBright(' MONGODB');
 				}
 				break;
 
 			default:
 				{
-					data = ' LOG \t';
+					data = chalk.white(' LOG \t');
 				}
 				break;
 		}

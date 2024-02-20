@@ -1,4 +1,5 @@
 enum Category {
+	Moderation = 'Moderation',
 	Utilities = 'Utilities',
 }
 

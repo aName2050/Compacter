@@ -17,7 +17,10 @@ export default class BotClient extends Client implements IClient {
 	constructor() {
 		super({ intents: [] });
 
-		this.config = require(`../../../../config/static.json`);
+		this.config = {
+			...require(`../../../../config/static.json`),
+			...require(`../../../../config/private.json`),
+		};
 		this.handler = new Handler(this);
 		this.commands = new Collection();
 		this.subcommands = new Collection();

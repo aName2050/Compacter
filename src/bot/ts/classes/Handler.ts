@@ -28,7 +28,7 @@ export default class Handler implements IHandler {
 						undefined,
 						LogType.Error,
 						`Error: ${file
-							.split('/')
+							.split('\\')
 							.pop()} does not have an EventName assigned.`
 					)
 				);
@@ -61,8 +61,8 @@ export default class Handler implements IHandler {
 						undefined,
 						LogType.Error,
 						`Error: ${file
-							.split('/')
-							.pop()} does not have an EventName assigned.`
+							.split('\\')
+							.pop()} does not have an CommandName assigned.`
 					)
 				);
 
