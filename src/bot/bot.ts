@@ -1,3 +1,6 @@
 import BotClient from './ts/classes/Client';
 
-new BotClient().Init();
+// prettier-ignore
+(new BotClient()).Init();
+
+// 4 10.36

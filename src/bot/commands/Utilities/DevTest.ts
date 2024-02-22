@@ -10,19 +10,19 @@ import Category from '../../ts/enums/Category';
 export default class Test extends Command {
 	constructor(client: BotClient) {
 		super(client, {
-			name: 'test',
-			description: 'Test command',
+			name: 'dev',
+			description: 'Test command for dev',
 			category: Category.Utilities,
 			default_member_permission:
 				PermissionsBitField.Flags.UseApplicationCommands,
 			dm_permission: false,
 			cooldown: 3,
 			options: [],
-			dev: false,
+			dev: true,
 		});
 	}
 
 	Execute(interaction: ChatInputCommandInteraction<CacheType>): void {
-		interaction.reply({ content: 'Hello world!', ephemeral: true });
+		interaction.reply({ content: 'Hello dev!', ephemeral: true });
 	}
 }

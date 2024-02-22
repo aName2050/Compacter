@@ -8,6 +8,7 @@ export default interface IClient {
 	commands: Collection<string, Command>;
 	subcommands: Collection<string, SubCommand>;
 	cooldowns: Collection<string, Collection<string, number>>;
+	devMode: boolean;
 
 	Init(): void;
 	LoadHandlers(): void;

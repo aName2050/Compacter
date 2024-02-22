@@ -17,6 +17,7 @@ export default class Command implements ICommand {
 	default_member_permission: bigint;
 	dm_permission: boolean;
 	cooldown: number;
+	dev: boolean;
 
 	constructor(client: BotClient, options: ICommandOptions) {
 		this.client = client;
@@ -27,6 +28,7 @@ export default class Command implements ICommand {
 		this.default_member_permission = options.default_member_permission;
 		this.dm_permission = options.dm_permission;
 		this.cooldown = options.cooldown;
+		this.dev = options.dev;
 	}
 
 	Execute(interaction: ChatInputCommandInteraction<CacheType>): void {}

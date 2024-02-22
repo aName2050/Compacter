@@ -21,35 +21,67 @@ export default class Ready extends Event {
 			`Client (${this.client.user?.tag}) is ready.`
 		);
 
-		const commands: object[] = this.GetJSON(this.client.commands);
+		const clientID = this.client.devMode
+			? this.client.config.CLIENT.ID
+			: this.client.config.PROD__CLIENT.ID;
 
-		const rest = new REST().setToken(this.client.config['BOT-TOKEN']);
+		const rest = new REST().setToken(
+			this.client.devMode
+				? this.client.config.BOT_TOKEN
+				: this.client.config.PROD__BOT_TOKEN
+		);
 
-		const setCommands: any = await rest.put(
+		if (this.client.devMode) {
+			const globalCommands: any = await rest.put(
+				Routes.applicationCommands(clientID),
+				{
+					body: this.GetJSON(
+						this.client.commands.filter(command => !command.dev)
+					),
+				}
+			);
+
+			logger.log(
+				undefined,
+				LogType.HTTP,
+				`${chalk.greenBright('200')} ${chalk.blue(
+					'PUT'
+				)} https://discord.com/api/v10/applications/${chalk.bold(
+					clientID
+				)}/commands`
+			);
+			logger.log(
+				undefined,
+				LogType.Info,
+				`Successfully updated ${globalCommands.length} global application (/) command(s).`
+			);
+		}
+
+		const devCommands: any = await rest.put(
 			Routes.applicationGuildCommands(
-				this.client.config.CLIENT.ID,
+				clientID,
 				this.client.config.DEV_GUILD
 			),
 			{
-				body: commands,
+				body: this.GetJSON(
+					this.client.commands.filter(command => command.dev)
+				),
 			}
 		);
 
 		logger.log(
 			undefined,
 			LogType.HTTP,
-			`${chalk.greenBright(200)} ${chalk.blue(
+			`${chalk.greenBright('200')} ${chalk.blue(
 				'PUT'
-			)} https://discord.com/api/v10/applications/${
-				this.client.config.CLIENT.ID
-			}/guilds/${this.client.config.DEV_GUILD}/commands`
+			)} https://discord.com/api/v10/applications/${chalk.bold(
+				clientID
+			)}/guilds/${this.client.config.DEV_GUILD}/commands`
 		);
 		logger.log(
 			undefined,
 			LogType.Info,
-			`Successfully updated commands for guild ${chalk.bold(
-				this.client.config.DEV_GUILD
-			)}. Updated ${setCommands.length} command(s).`
+			`Successfully updated ${devCommands.length} developer application (/) command(s).`
 		);
 	}
 

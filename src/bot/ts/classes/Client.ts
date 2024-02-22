@@ -13,6 +13,7 @@ export default class BotClient extends Client implements IClient {
 	commands: Collection<string, Command>;
 	subcommands: Collection<string, SubCommand>;
 	cooldowns: Collection<string, Collection<string, number>>;
+	devMode: boolean;
 
 	constructor() {
 		super({ intents: [] });
@@ -25,12 +26,23 @@ export default class BotClient extends Client implements IClient {
 		this.commands = new Collection();
 		this.subcommands = new Collection();
 		this.cooldowns = new Collection();
+		this.devMode = process.argv.slice(2).includes('--dev');
 	}
 
 	Init(): void {
+		logger.log(
+			undefined,
+			LogType.Info,
+			`Starting bot in ${chalk.bold(
+				this.devMode ? 'development' : 'production'
+			)} mode.`
+		);
+
 		this.LoadHandlers();
 
-		this.login(this.config['BOT-TOKEN'])
+		this.login(
+			this.devMode ? this.config.BOT_TOKEN : this.config.PROD__BOT_TOKEN
+		)
 			.then(() =>
 				logger.log(
 					undefined,
@@ -49,6 +61,6 @@ export default class BotClient extends Client implements IClient {
 
 	LoadHandlers(): void {
 		this.handler.LoadEvents();
-		this.handler.LoadCommands(); // 11.05
+		this.handler.LoadCommands();
 	}
 }
