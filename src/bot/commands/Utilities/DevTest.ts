@@ -23,6 +23,9 @@ export default class Test extends Command {
 	}
 
 	Execute(interaction: ChatInputCommandInteraction<CacheType>): void {
+		throw new Error(
+			'Promise<T> is not an expected type, expected Array<T>'
+		);
 		interaction.reply({ content: 'Hello dev!', ephemeral: true });
 	}
 }

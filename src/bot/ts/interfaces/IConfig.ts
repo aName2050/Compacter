@@ -3,6 +3,7 @@ export default interface IConfig {
 	BOT_TOKEN: string;
 	CLIENT: { SECRET: string; ID: string };
 	DEV_GUILD: string;
+	DEVELOPERS: string[];
 	// Compacter (PRODUCTION)
 	PROD__BOT_TOKEN: string;
 	PROD__CLIENT: { SECRET: string; ID: string };

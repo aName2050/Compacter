@@ -46,6 +46,23 @@ export default class CommandHandler extends Event {
 				this.client.commands.delete(interaction.commandName)
 			);
 
+		if (
+			command.dev &&
+			!this.client.config.DEVELOPERS.includes(interaction.user.id)
+		)
+			return interaction.reply({
+				embeds: [
+					new EmbedBuilder()
+						.setColor(Colors.ERROR as ColorResolvable)
+						.setTitle('🧑‍💻 Developer Command')
+						.setDescription(
+							'This command is reserved for the developers of this bot to use.'
+							// + '\n[Learn more](https://compacter.xyz/support/errors/dev-cmd)'
+						),
+				],
+				ephemeral: true,
+			});
+
 		const { cooldowns } = this.client;
 		if (!cooldowns.has(command.name))
 			cooldowns.set(command.name, new Collection());
@@ -82,12 +99,20 @@ export default class CommandHandler extends Event {
 			cooldownAmount
 		);
 
+		const subCommandGroup = interaction.options.getSubcommandGroup(false);
+		const subCommand = `${interaction.commandName}${
+			subCommandGroup ? `.${subCommandGroup}` : ''
+		}.${interaction.options.getSubcommand(false) || ''}`;
+
 		try {
-			const subCommandGroup =
-				interaction.options.getSubcommandGroup(false);
-			const subCommand = `${interaction.commandName}${
-				subCommandGroup ? `.${subCommandGroup}` : ''
-			}.${interaction.options.getSubcommand(false) || ''}`;
+			logger.log(
+				undefined,
+				LogType.Command,
+				`Running application (/) command "${chalk.bold(
+					this.client.subcommands.get(subCommand)?.name ||
+						command.name
+				)}"`
+			);
 
 			return (
 				this.client.subcommands.get(subCommand)?.Execute(interaction) ||
@@ -96,10 +121,21 @@ export default class CommandHandler extends Event {
 		} catch (e) {
 			logger.log(
 				undefined,
+				LogType.Command,
+				`${chalk.redBright(
+					'Failed'
+				)} running application (/) command "${chalk.bold(
+					this.client.subcommands.get(subCommand)?.name ||
+						command.name
+				)}"`
+			);
+			logger.log(
+				undefined,
 				LogType.Error,
 				`${chalk.redBright('CommandError:')} ${e}`
 			);
 			console.error(e);
+			logger.log(undefined, LogType.Log, 'Recovering...');
 			return interaction.reply({
 				embeds: [
 					new EmbedBuilder()
