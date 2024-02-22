@@ -2,3 +2,4 @@ node_modules
 .vscode
 config/private.json
 config/static.json
+package-lock.json
