@@ -53,7 +53,7 @@ export default class Ready extends Event {
 			logger.log(
 				undefined,
 				LogType.Info,
-				`Successfully updated ${globalCommands.length} global application (/) command(s).`
+				`Successfully loaded ${globalCommands.length} global application (/) command(s).`
 			);
 		}
 
@@ -81,7 +81,7 @@ export default class Ready extends Event {
 		logger.log(
 			undefined,
 			LogType.Info,
-			`Successfully updated ${devCommands.length} developer application (/) command(s).`
+			`Successfully loaded ${devCommands.length} developer application (/) command(s).`
 		);
 	}
 
