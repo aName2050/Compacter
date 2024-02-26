@@ -76,7 +76,7 @@ export default class Ready extends Event {
 				'PUT'
 			)} https://discord.com/api/v10/applications/${chalk.bold(
 				clientID
-			)}/guilds/${this.client.config.DEV_GUILD}/commands`
+			)}/guilds/${chalk.bold(this.client.config.DEV_GUILD)}/commands`
 		);
 		logger.log(
 			undefined,
