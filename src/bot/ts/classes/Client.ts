@@ -1,4 +1,4 @@
-import { Client, Collection } from 'discord.js';
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import IConfig from '../interfaces/IConfig';
 import IClient from '../interfaces/IClient';
 import logger, { LogType } from '../../../Util/logger';
@@ -6,6 +6,7 @@ import chalk from 'chalk';
 import Handler from './Handler';
 import Command from './Command';
 import SubCommand from './SubCommand';
+import { connect } from 'mongoose';
 
 export default class BotClient extends Client implements IClient {
 	handler: Handler;
@@ -16,7 +17,7 @@ export default class BotClient extends Client implements IClient {
 	devMode: boolean;
 
 	constructor() {
-		super({ intents: [] });
+		super({ intents: [GatewayIntentBits.Guilds] });
 
 		this.config = {
 			...require(`../../../../config/static.json`),
@@ -50,13 +51,42 @@ export default class BotClient extends Client implements IClient {
 					`Logged in as ${chalk.bold(this.user?.username)}`
 				)
 			)
-			.catch(e =>
+			.catch(e => {
 				logger.log(
 					undefined,
 					LogType.Error,
 					`An error occurred while logging into the bot client. Error: ${e}`
+				);
+				console.error(e);
+			});
+		// TODO: update logs
+		connect(
+			this.devMode
+				? this.config.DEV_MONGO_URL
+				: this.config.PROD__MongoURL
+		)
+			.then(() =>
+				logger.log(
+					undefined,
+					LogType.MongoDB,
+					`Connected to ${chalk.bold(
+						this.devMode ? 'development' : 'production'
+					)} database`
 				)
-			);
+			)
+			.catch(e => {
+				logger.log(
+					undefined,
+					LogType.MongoDB,
+					'An error occurred while connecting to the database.'
+				);
+				logger.log(
+					undefined,
+					LogType.Error,
+					`DatabaseConnectError: ${e}`
+				);
+				console.error(e);
+			});
 	}
 
 	LoadHandlers(): void {
