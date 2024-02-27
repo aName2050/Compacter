@@ -46,7 +46,7 @@ export default class GuildCreate extends Event {
 					new EmbedBuilder()
 						.setColor(Colors.SUCCESS as ColorResolvable)
 						.setDescription(
-							'Thanks for inviting **Compacter** to your server!\n\nTo setup **Compacter** and take advantage of all its features, setup the bot by running `/setup` in your server. To edit settings, run `/settings`.'
+							'Thanks for inviting **Compacter** to your server!\n\nTo setup **Compacter** quickly and take advantage of all its features, or quickly change common settings, run `/setup` in your server. To edit settings and access more specific settings, run `/settings`.'
 						),
 				],
 			})
