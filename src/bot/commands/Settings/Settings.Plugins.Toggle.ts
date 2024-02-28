@@ -9,6 +9,7 @@ import BotClient from '../../ts/classes/Client';
 import SubCommand from '../../ts/classes/SubCommand';
 import Colors from '../../../../config/colors.json';
 import GuildConfig from '../../mongodb/schemas/GuildConfig';
+import generateGuildConfig from '../../../Util/helpers/generateGuildConfig';
 
 export default class SetupPluginsLogs extends SubCommand {
 	constructor(client: BotClient) {
@@ -18,10 +19,11 @@ export default class SetupPluginsLogs extends SubCommand {
 	}
 
 	async Execute(interaction: ChatInputCommandInteraction<CacheType>) {
-		const plugin = interaction.options.getString('plugin');
-		const channel = interaction.options.getChannel(
-			'channel'
-		) as TextChannel;
+		const plugin = interaction.options
+			.getString('plugin')!
+			.toLowerCase()
+			.split('.')[1];
+		const enabled = interaction.options.getBoolean('enabled') || false;
 
 		await interaction.deferReply({ ephemeral: true });
 
@@ -30,15 +32,12 @@ export default class SetupPluginsLogs extends SubCommand {
 				guildId: interaction.guildId,
 			});
 
-			if (!guild)
-				guild = await GuildConfig.create({
-					guildId: interaction.guildId,
-				});
+			if (!guild) guild = await generateGuildConfig(interaction.guildId!);
 
 			//@ts-ignore
-			const oldValue = guild.plugins[`${plugin}`].logChannelID;
+			const oldValue = guild.plugins[`${plugin}`]?.enabled;
 			//@ts-ignore
-			guild.plugins[`${plugin}`].logChannelID = channel.id;
+			guild.plugins[`${plugin}`].enabled = enabled;
 
 			await guild.save();
 
@@ -48,7 +47,10 @@ export default class SetupPluginsLogs extends SubCommand {
 						.setColor(Colors.SUCCESS as ColorResolvable)
 						.setTitle('✔️ Plugin configured')
 						.setDescription(
-							`The plugin \`${plugin}\` was successfully modified.\n\n**Logging for this plugin has changed**\nChanged from...\n - <#${oldValue}>\nTo...\n - <#${guild.plugins.moderation.logChannelID}>`
+							`The plugin \`${plugin}\` was successfully modified.\n\n**Logging for this plugin has changed**\nChanged from...\n - Enabled?=${oldValue}\nTo...\n - Enabled?=${
+								//@ts-ignore
+								guild.plugins[`${plugin}`].enabled
+							}`
 						),
 				],
 			});

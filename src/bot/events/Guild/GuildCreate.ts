@@ -5,6 +5,7 @@ import GuildConfig from '../../mongodb/schemas/GuildConfig';
 import * as Colors from '../../../../config/colors.json';
 import logger, { LogType } from '../../../Util/logger';
 import chalk from 'chalk';
+import generateGuildConfig from '../../../Util/helpers/generateGuildConfig';
 
 export default class GuildCreate extends Event {
 	constructor(client: BotClient) {
@@ -18,7 +19,7 @@ export default class GuildCreate extends Event {
 	async Execute(guild: Guild) {
 		try {
 			if (!(await GuildConfig.exists({ guildId: guild.id })))
-				await GuildConfig.create({ guildId: guild.id });
+				await generateGuildConfig(guild.id);
 		} catch (e) {
 			logger.log(
 				undefined,

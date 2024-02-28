@@ -9,6 +9,7 @@ import BotClient from '../../ts/classes/Client';
 import SubCommand from '../../ts/classes/SubCommand';
 import Colors from '../../../../config/colors.json';
 import GuildConfig from '../../mongodb/schemas/GuildConfig';
+import generateGuildConfig from '../../../Util/helpers/generateGuildConfig';
 
 export default class SetupPluginsLogs extends SubCommand {
 	constructor(client: BotClient) {
@@ -18,7 +19,10 @@ export default class SetupPluginsLogs extends SubCommand {
 	}
 
 	async Execute(interaction: ChatInputCommandInteraction<CacheType>) {
-		const plugin = interaction.options.getString('plugin');
+		const plugin = interaction.options
+			.getString('plugin')!
+			.toLowerCase()
+			.split('.')[1];
 		const channel = interaction.options.getChannel(
 			'channel'
 		) as TextChannel;
@@ -30,13 +34,10 @@ export default class SetupPluginsLogs extends SubCommand {
 				guildId: interaction.guildId,
 			});
 
-			if (!guild)
-				guild = await GuildConfig.create({
-					guildId: interaction.guildId,
-				});
+			if (!guild) guild = await generateGuildConfig(interaction.guildId!);
 
 			//@ts-ignore
-			const oldValue: string = guild.plugins[`${plugin}`].logChannelID;
+			const oldValue: string = guild.plugins[`${plugin}`]?.logChannelID;
 			//@ts-ignore
 			guild.plugins[`${plugin}`].logChannelID = channel.id;
 
@@ -55,13 +56,15 @@ export default class SetupPluginsLogs extends SubCommand {
 						.setColor(Colors.SUCCESS as ColorResolvable)
 						.setTitle('✔️ Plugin configured')
 						.setDescription(
-							`The plugin \`${plugin}\` was successfully modified.\n\n**Logging for this plugin has changed**\nChanged from...\n - <#${oldValue}>\nTo...\n - <#${
+							`The plugin \`${plugin}\` was successfully modified.\n\n**Logging for this plugin has changed**\nChanged from...\n - ${
+								oldValue == '' ? 'Not set' : `<#${oldValue}>`
+							}\nTo...\n - <#${
 								guild.plugins.moderation.logChannelID
 							}>
                             ${
 								pluginAlreadyEnabled
 									? ''
-									: '\n\nThis plugin was automatically enabled for this server.'
+									: '\n\nThis plugin was automatically enabled for this server because you changed the logging settings for this plugin.'
 							}
                             `
 						),
