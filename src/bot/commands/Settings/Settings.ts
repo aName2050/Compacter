@@ -30,6 +30,12 @@ export default class Settings extends Command {
 									description:
 										'The plugin you want to configure',
 									type: ApplicationCommandOptionType.String,
+									choices: [
+										{
+											name: 'Moderation',
+											value: 'plugins.moderation',
+										},
+									],
 									required: true,
 								},
 								{
