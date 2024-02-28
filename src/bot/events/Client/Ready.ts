@@ -44,8 +44,8 @@ export default class Ready extends Event {
 			logger.log(
 				undefined,
 				LogType.HTTP,
-				`${chalk.greenBright('200')} ${chalk.blue(
-					'PUT'
+				`${chalk.greenBright('200')} ${chalk.blue('PUT')} ${chalk.bold(
+					'OUT'
 				)} https://discord.com/api/v10/applications/${chalk.bold(
 					clientID
 				)}/commands`
@@ -72,8 +72,8 @@ export default class Ready extends Event {
 		logger.log(
 			undefined,
 			LogType.HTTP,
-			`${chalk.greenBright('200')} ${chalk.blue(
-				'PUT'
+			`${chalk.greenBright('200')} ${chalk.blue('PUT')} ${chalk.bold(
+				'OUT'
 			)} https://discord.com/api/v10/applications/${chalk.bold(
 				clientID
 			)}/guilds/${chalk.bold(this.client.config.DEV_GUILD)}/commands`
