@@ -54,7 +54,7 @@ export default class SetupPluginsLogs extends SubCommand {
 				embeds: [
 					new EmbedBuilder()
 						.setColor(Colors.SUCCESS as ColorResolvable)
-						.setTitle('✔️ Plugin configured')
+						.setTitle('✔️  Plugin configured')
 						.setDescription(
 							`The plugin \`${plugin}\` was successfully modified.\n\n**Logging for this plugin has changed**\nChanged from...\n - ${
 								oldValue == '' ? 'Not set' : `<#${oldValue}>`
@@ -76,7 +76,7 @@ export default class SetupPluginsLogs extends SubCommand {
 				embeds: [
 					new EmbedBuilder()
 						.setColor(Colors.ERROR as ColorResolvable)
-						.setTitle('❌ Unable to configure plugin')
+						.setTitle('❌  Unable to configure plugin')
 						.setDescription(
 							`An unexpected error occurred while trying to modify this plugin.\n\`\`\`yaml\n${e}\n\`\`\``
 						),

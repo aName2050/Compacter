@@ -21,7 +21,7 @@ export default class SetupPluginsLogs extends SubCommand {
 		return interaction.reply({
 			embeds: [
 				new EmbedBuilder()
-					.setTitle('🍲 Command still cooking')
+					.setTitle('🍲  Command still cooking')
 					.setDescription(
 						"Sorry! We're still cooking up this command!"
 					)
