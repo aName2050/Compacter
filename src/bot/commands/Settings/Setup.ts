@@ -1,5 +1,6 @@
 import {
 	ApplicationCommandOptionType,
+	ApplicationCommandType,
 	ChannelType,
 	PermissionFlagsBits,
 } from 'discord.js';
@@ -18,6 +19,7 @@ export default class Settings extends Command {
 			dm_permission: false,
 			dev: false,
 			cooldown: 3,
+			type: ApplicationCommandType.ChatInput,
 			options: [
 				{
 					name: 'plugins',

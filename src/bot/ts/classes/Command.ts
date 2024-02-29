@@ -1,4 +1,5 @@
 import {
+	ApplicationCommandType,
 	AutocompleteInteraction,
 	CacheType,
 	ChatInputCommandInteraction,
@@ -7,15 +8,17 @@ import ICommand from '../interfaces/ICommand';
 import Category from '../enums/Category';
 import BotClient from './Client';
 import ICommandOptions from '../interfaces/ICommandOptions';
+import { CommandOption } from '../../../types/commandOptions';
 
 export default class Command implements ICommand {
 	client: BotClient;
 	name: string;
 	description: string;
 	category: Category;
-	options: object;
+	options: Array<CommandOption>;
 	default_member_permission: bigint;
 	dm_permission: boolean;
+	type: ApplicationCommandType;
 	cooldown: number;
 	dev: boolean;
 
@@ -29,6 +32,7 @@ export default class Command implements ICommand {
 		this.dm_permission = options.dm_permission;
 		this.cooldown = options.cooldown;
 		this.dev = options.dev;
+		this.type = options.type;
 	}
 
 	Execute(interaction: ChatInputCommandInteraction<CacheType>): void {}

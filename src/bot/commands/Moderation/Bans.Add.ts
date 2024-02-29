@@ -75,5 +75,7 @@ export default class BansAdd extends SubCommand {
 				],
 				ephemeral: true,
 			});
+
+		// target?.send({ embeds })
 	}
 }

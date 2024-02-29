@@ -1,5 +1,6 @@
 import {
 	ApplicationCommandOptionType,
+	ApplicationCommandType,
 	CacheType,
 	ChatInputCommandInteraction,
 	ColorResolvable,
@@ -24,6 +25,7 @@ export default class Emit extends Command {
 			dm_permission: false,
 			category: Category.Developer,
 			cooldown: 1,
+			type: ApplicationCommandType.ChatInput,
 			options: [
 				{
 					name: 'event',

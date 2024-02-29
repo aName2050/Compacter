@@ -1,4 +1,8 @@
-import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js';
+import {
+	ApplicationCommandOptionType,
+	ApplicationCommandType,
+	PermissionFlagsBits,
+} from 'discord.js';
 import BotClient from '../../ts/classes/Client';
 import Command from '../../ts/classes/Command';
 import Category from '../../ts/enums/Category';
@@ -13,6 +17,7 @@ export default class Settings extends Command {
 			dm_permission: false,
 			dev: false,
 			cooldown: 3,
+			type: ApplicationCommandType.ChatInput,
 			options: [
 				{
 					name: 'plugins',
