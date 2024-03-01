@@ -1,8 +1,9 @@
 enum Category {
 	Developer = 'Developers',
 	Moderation = 'Moderation',
-	Utilities = 'Utilities',
+	Utility = 'Utility',
 	Settings = 'Settings',
+	Tools = 'Tools',
 }
 
 export default Category;

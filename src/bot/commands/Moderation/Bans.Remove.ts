@@ -18,7 +18,7 @@ export default class BansRemove extends SubCommand {
 	}
 
 	async Execute(interaction: ChatInputCommandInteraction<CacheType>) {
-		const target = interaction.options.getString('target')!;
+		const target = interaction.options.getString('userid')!;
 		const reason = interaction.options.getString('reason')!;
 		const silent = interaction.options.getBoolean('silent') || false;
 
@@ -31,13 +31,30 @@ export default class BansRemove extends SubCommand {
 		} catch (e) {
 			return interaction.reply({
 				embeds: [
-					errorEmbed.setTitle('❌  Cannot unban this user')
-						.setDescription(`An unexpected occurred while unbanning this user.
-                        \`\`\`yaml
-                        ${e}
-                        \`\`\``),
+					errorEmbed
+						.setTitle('❌  Cannot unban this user')
+						.setDescription(
+							`An unexpected occurred while unbanning this user.\n\`\`\`yaml\n${e}\n\`\`\``
+						),
 				],
 				ephemeral: true,
+			});
+		}
+
+		try {
+			await interaction.guild?.bans.remove(target, reason);
+		} catch (e) {
+			return interaction.reply({
+				embeds: [
+					errorEmbed
+						.setTitle('❌  Cannot unban this user')
+						.setDescription(
+							`An unexpected error occurred while trying to unban this user
+							\`\`\`yaml
+							${e}
+							\`\`\``
+						),
+				],
 			});
 		}
 
@@ -47,10 +64,7 @@ export default class BansRemove extends SubCommand {
 					.setColor(Colors.EMBED_INVIS_SIDEBAR as ColorResolvable)
 					.setTitle('🔨  Member Unbanned')
 					.setDescription(
-						`${target} was unbanned by ${interaction.member} with the reason
-				\`\`\`txt
-				${reason}
-				\`\`\``
+						`${target} was unbanned by ${interaction.member} with the reason\n\`\`\`txt\n${reason}\n\`\`\``
 					)
 					.setFooter({ text: `USER_ID: ${target}` }),
 			],
@@ -73,12 +87,7 @@ export default class BansRemove extends SubCommand {
 								})!,
 							})
 							.setDescription(
-								`
-						## Reason
-						\`\`\`txt
-						${reason}
-						\`\`\`
-						`
+								`## Reason\n\`\`\`txt\n${reason}\n\`\`\``
 							)
 							.setFooter({
 								text: 'Some info may not be available here to protect user privacy.',
@@ -108,10 +117,7 @@ export default class BansRemove extends SubCommand {
 						.setColor(Colors.EMBED_INVIS_SIDEBAR as ColorResolvable)
 						.setTitle('🔨  Member Unbanned')
 						.setDescription(
-							`${target} was unbanned by ${interaction.member} with the reason
-				\`\`\`txt
-				${reason}
-				\`\`\``
+							`${target} was unbanned by ${interaction.member} with the reason\n\`\`\`txt\n${reason}\n\`\`\``
 						)
 						.setFooter({ text: `USER_ID: ${target}` })
 						.setTimestamp(),

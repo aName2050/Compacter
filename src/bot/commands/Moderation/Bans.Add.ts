@@ -21,7 +21,7 @@ export default class BansAdd extends SubCommand {
 	}
 
 	async Execute(interaction: ChatInputCommandInteraction<CacheType>) {
-		const target = interaction.options.getMember('target') as GuildMember;
+		const target = interaction.options.getMember('user') as GuildMember;
 		const reason = interaction.options.getString('reason')!;
 		const messagesAge =
 			interaction.options.getString('user_messages') || '0';
@@ -85,18 +85,12 @@ export default class BansAdd extends SubCommand {
 					new EmbedBuilder()
 						.setColor(Colors.DANGER as ColorResolvable)
 						.setDescription(
-							`
-					You **banned** from \`${interaction.guild?.name}\` by ${interaction.member}.
-					You were banned for
-					\`\`\`txt
-					${reason}
-					\`\`\`
-					`
+							`You were **banned** from \`${interaction.guild?.name}\` by ${interaction.member}.\nYou were banned for\n\`\`\`txt\n${reason}\n\`\`\``
 						)
 						.setFooter({
 							text: 'To appeal, contact the moderator who banned you.',
 						})
-						.setImage(interaction.guild?.iconURL()!),
+						.setThumbnail(interaction.guild?.iconURL()!),
 				],
 			})
 			.catch();
@@ -127,18 +121,16 @@ export default class BansAdd extends SubCommand {
 					.setColor(Colors.EMBED_INVIS_SIDEBAR as ColorResolvable)
 					.setTitle('🔨  Member Banned')
 					.setDescription(
-						`${target} was banned by ${interaction.member} for
-				\`\`\`txt
-				${reason}
-				\`\`\`
-				${
-					messagesAge == '0'
-						? ''
-						: `Messages sent by this user from the last **${messagesAge}** have been deleted.`
-				}`
+						`${target} was banned by ${
+							interaction.member
+						} for\n\`\`\`txt\n${reason}\n\`\`\`\n${
+							messagesAge == '0'
+								? ''
+								: `Messages sent by this user from the last **${messagesAge}** have been deleted.`
+						}`
 					)
 					.setFooter({ text: `USER_ID: ${target.id}` })
-					.setImage(
+					.setThumbnail(
 						target.displayAvatarURL({
 							size: 512,
 							forceStatic: false,
@@ -164,12 +156,7 @@ export default class BansAdd extends SubCommand {
 								})!,
 							})
 							.setDescription(
-								`
-						## Reason
-						\`\`\`txt
-						${reason}
-						\`\`\`
-						`
+								`## Reason\n\`\`\`txt\n${reason}\n\`\`\``
 							)
 							.setFooter({
 								text: 'Some info may not be available here to protect user privacy.',
@@ -199,18 +186,16 @@ export default class BansAdd extends SubCommand {
 						.setColor(Colors.EMBED_INVIS_SIDEBAR as ColorResolvable)
 						.setTitle('🔨  Member Banned')
 						.setDescription(
-							`${target} was banned by ${interaction.member} for
-				\`\`\`txt
-				${reason}
-				\`\`\`
-				${
-					messagesAge == '0'
-						? ''
-						: `Messages sent by this user from the last **${messagesAge}** have been deleted.`
-				}`
+							`${target} was banned by ${
+								interaction.member
+							} for\n\`\`\`txt\n${reason}\n\`\`\`\n${
+								messagesAge == '0'
+									? ''
+									: `Messages sent by this user from the last **${messagesAge}** have been deleted.`
+							}`
 						)
 						.setFooter({ text: `USER_ID: ${target.id}` })
-						.setImage(
+						.setThumbnail(
 							target.displayAvatarURL({
 								size: 512,
 								forceStatic: false,
