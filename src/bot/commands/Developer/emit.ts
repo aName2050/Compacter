@@ -18,6 +18,7 @@ import BotClient from '../../ts/classes/Client';
 export default class Emit extends Command {
 	constructor(client: BotClient) {
 		super(client, {
+			type: ApplicationCommandType.ChatInput,
 			name: 'emit',
 			description: 'Emit an event',
 			dev: true,
@@ -25,7 +26,6 @@ export default class Emit extends Command {
 			dm_permission: false,
 			category: Category.Developer,
 			cooldown: 1,
-			type: ApplicationCommandType.ChatInput,
 			options: [
 				{
 					name: 'event',

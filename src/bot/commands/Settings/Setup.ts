@@ -11,6 +11,7 @@ import Category from '../../ts/enums/Category';
 export default class Settings extends Command {
 	constructor(client: BotClient) {
 		super(client, {
+			type: ApplicationCommandType.ChatInput,
 			name: 'setup',
 			description:
 				'Quickly setup your server. You can also quickly change plugin settings here',
@@ -19,7 +20,6 @@ export default class Settings extends Command {
 			dm_permission: false,
 			dev: false,
 			cooldown: 3,
-			type: ApplicationCommandType.ChatInput,
 			options: [
 				{
 					name: 'plugins',

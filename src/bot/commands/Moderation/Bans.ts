@@ -10,6 +10,7 @@ import Category from '../../ts/enums/Category';
 export default class Ban extends Command {
 	constructor(client: BotClient) {
 		super(client, {
+			type: ApplicationCommandType.ChatInput,
 			name: 'bans',
 			description: 'Manage bans for this server',
 			category: Category.Moderation,
@@ -17,7 +18,6 @@ export default class Ban extends Command {
 			dm_permission: false,
 			cooldown: 3,
 			dev: false,
-			type: ApplicationCommandType.ChatInput,
 			options: [
 				{
 					name: 'add',
