@@ -1,0 +1,11 @@
+export enum EmbedColor {
+	INVISIBLE = '#2B2D31',
+	BACKGROUND = '#212529',
+	PRIMARY = '#0D6EFD',
+	SECONDARY = '#6C757D',
+	SUCCESS = '#198754',
+	INFO = '#0DCAF0',
+	WARNING = '#FFC107',
+	DANGER = '#DC3545',
+	ERROR = '#B00020',
+}

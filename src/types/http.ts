@@ -1,0 +1,9 @@
+export enum HTTPType {
+	GET = 'GET',
+	POST = 'POST',
+	PUT = 'PUT',
+	DELETE = 'DELETE',
+	PATCH = 'PATCH',
+	_HTTPDONE = 'HTTPDONE',
+	_HTTPERROR = 'HTTPERROR',
+}

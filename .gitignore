@@ -1,6 +1,5 @@
 node_modules
 .vscode
-config/private.json
-config/static.json
+/config
 package-lock.json
 /OLD
