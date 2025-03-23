@@ -5,7 +5,7 @@ import { LogType } from '../types/log';
 class Logger {
 	/**
 	 *
-	 * @param req Set to undefined if not including Request object, defualts to local IP
+	 * @param req Set to undefined if not including Request object, defaults to local IP
 	 * @param type The log type
 	 * @param args The stuff to log
 	 */
@@ -78,3 +78,6 @@ class Logger {
 		console.log(timestamp, data, `${ip}\t`, args.join(''));
 	}
 }
+
+export default new Logger();
+export { Logger };
